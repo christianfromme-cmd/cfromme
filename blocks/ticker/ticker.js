@@ -6,9 +6,8 @@ const placeholders = {
   of: 'of',
 };
 
-const NEWS_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-  <path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm12.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 15.5 12zm-2.5-9v2.06A7 7 0 0 1 13 21v-2.06A5 5 0 0 0 13 3z"/>
-</svg>`;
+// RWE "Latest at #TeamRWE" short-news header icon (source: kurznachrichtenmodul-info.svg).
+const NEWS_ICON = '<img src="https://www.rwe.com/-/media/RWE/images/homepage/kurznachrichtenmodul/kurznachrichtenmodul-info.svg" alt="" loading="lazy">';
 
 function showSlide(block, index = 0) {
   const slides = block.querySelectorAll('.ticker-slide');
@@ -95,10 +94,28 @@ export default async function decorate(block) {
     slide.dataset.slideIndex = idx;
     slide.setAttribute('id', `ticker-${tickerId}-item-${idx}`);
 
-    const cell = row.querySelector(':scope > div') || row;
-    while (cell.firstChild) slide.append(cell.firstChild);
+    // Each item is one or two cells. A cell holding only a picture/image is the
+    // item thumbnail (shown right, as on the source); the other cell is the text.
+    const cells = [...row.querySelectorAll(':scope > div')];
+    let imageCell = null;
+    const textCell = document.createElement('div');
+    textCell.classList.add('ticker-slide-text');
+    cells.forEach((c) => {
+      const pic = c.querySelector('picture, img');
+      const onlyMedia = pic && !c.textContent.trim();
+      if (onlyMedia && !imageCell) {
+        imageCell = document.createElement('div');
+        imageCell.classList.add('ticker-slide-image');
+        imageCell.append(pic);
+      } else {
+        while (c.firstChild) textCell.append(c.firstChild);
+      }
+    });
+    if (!cells.length) { while (row.firstChild) textCell.append(row.firstChild); }
 
-    unwrapButtons(slide);
+    unwrapButtons(textCell);
+    slide.append(textCell);
+    if (imageCell) slide.append(imageCell);
 
     const labelledBy = slide.querySelector('h1, h2, h3, h4, h5, h6');
     if (labelledBy && labelledBy.id) {
