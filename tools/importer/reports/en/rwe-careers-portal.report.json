@@ -1,0 +1,22 @@
+{
+  "status": "success",
+  "url": "https://www.rwe.com/en/rwe-careers-portal/",
+  "path": "en/rwe-careers-portal",
+  "timestamp": "2026-08-19T16:40:23.607Z",
+  "title": "RWE Careers | Our energy has impact.",
+  "template": "careers-portal",
+  "blocks": [
+    "hero-stage",
+    "ticker",
+    "cards-article",
+    "cards-article",
+    "cards-article",
+    "columns-about",
+    "columns-pullquote",
+    "columns-promo",
+    "columns-note",
+    "gallery",
+    "carousel-reviews",
+    "faq-list"
+  ]
+}

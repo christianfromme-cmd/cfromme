@@ -1,0 +1,41 @@
+{
+  "variantName": "cards-article",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "job/opportunity/working-at-RWE card grids",
+    "templateSource": "cards"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "article-cards",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image + heading + description + CTA, whole card linked",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "job/opportunity grids",
+      "article/teaser card grids",
+      "linked promo cards"
+    ],
+    "notSuitableFor": [
+      "tabular data",
+      "single feature highlight"
+    ]
+  },
+  "notes": "RWE tic01/tea01r card grid -> cards-article. Also used for the text-only 'Explore open jobs' promo pair (no-image cards structure).",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}

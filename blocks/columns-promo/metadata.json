@@ -1,0 +1,40 @@
+{
+  "variantName": "columns-promo",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "full-width 'Explore opportunities at RWE' image-left promo teaser",
+    "templateSource": "columns"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "accent",
+    "density": "wide",
+    "purpose": "promo",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "full-width image beside heading + text + CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "full-width image + text promo banners",
+      "colored CTA teasers"
+    ],
+    "notSuitableFor": [
+      "plain two-column text",
+      "card grids"
+    ]
+  },
+  "notes": "RWE tea01r--image-left full-width teaser -> columns-promo. Colored overlay + animated energy-line motif to be styled.",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}

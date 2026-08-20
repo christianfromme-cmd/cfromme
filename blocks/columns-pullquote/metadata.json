@@ -1,0 +1,40 @@
+{
+  "variantName": "columns-pullquote",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "Katja van Doren attributed quote",
+    "templateSource": "columns"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "pullquote",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "portrait image + attribution (name/role) beside heading + quote",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "attributed pull-quotes with a portrait",
+      "leadership/testimonial quotes"
+    ],
+    "notSuitableFor": [
+      "multi-item testimonial carousels",
+      "plain body text"
+    ]
+  },
+  "notes": "No dedicated UI Kit quote pattern; modeled as a columns pull-quote variant.",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}

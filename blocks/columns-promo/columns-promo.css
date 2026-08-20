@@ -1,0 +1,120 @@
+/* columns-promo — full-bleed image/video-left promo teaser (RWE tea01r--image-left) */
+
+/* Break out of the centered section column to span full viewport width. */
+.columns-promo-wrapper {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.columns-promo {
+  width: 100%;
+  color: #fff;
+}
+
+/* The single decorated row is the promo canvas. */
+.columns-promo > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Media cell (video/picture) — full-bleed background media. */
+.columns-promo-media {
+  order: 0;
+  width: 100%;
+  overflow: hidden;
+
+  /* Banner proportion on mobile so the media area reads as intentional. */
+  aspect-ratio: 16 / 9;
+
+  /* Branded fallback shown until the video paints / if media is unavailable. */
+  background-color: var(--brand-blue);
+  background-image: var(--energy-gradient);
+}
+
+.columns-promo-media .columns-promo-video,
+.columns-promo-media img,
+.columns-promo-media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text panel — RWE blue -> petrol gradient, white text. */
+.columns-promo-body {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px;
+  background-image: linear-gradient(45deg, var(--brand-blue) 22%, var(--energy-green-dark));
+  color: #fff;
+}
+
+.columns-promo-body h3 {
+  margin: 0 0 24px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.columns-promo-body p {
+  margin: 0 0 24px;
+  color: #fff;
+  font-size: var(--body-font-size-m);
+  line-height: 27px;
+}
+
+.columns-promo-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* CTA — energy-green gradient button (link is not auto-decorated as .button). */
+.columns-promo-body a:any-link {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 5px;
+  background-color: var(--energy-green-dark);
+  background-image: var(--energy-gradient);
+  color: #fff;
+  font-size: var(--body-font-size-m);
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.columns-promo-body a:any-link:hover,
+.columns-promo-body a:any-link:focus-visible {
+  background-image: linear-gradient(90deg, var(--brand-blue) 0%, var(--energy-green-dark) 100%);
+  color: #fff;
+}
+
+@media (width >= 900px) {
+  /* Media fills the whole promo; text panel overlays on the right. */
+  .columns-promo > div {
+    min-height: 600px;
+  }
+
+  .columns-promo-media {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
+  .columns-promo-body {
+    position: relative;
+    z-index: 1;
+    width: 400px;
+    max-width: 50%;
+    min-height: 600px;
+    margin-left: auto;
+
+    /* align right edge to the centered content column (1170px within 1440) */
+    margin-right: max(0px, calc((100% - var(--content-max-width)) / 2));
+    padding: 24px 32px;
+  }
+}

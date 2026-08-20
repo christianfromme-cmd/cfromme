@@ -1,0 +1,40 @@
+{
+  "variantName": "embed-social",
+  "baseBlock": "embed",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "'RWE @ Social Media' consent-gated feed",
+    "templateSource": "embed"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "social-feed",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "consent-gated social media feed placeholder + embed",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "social media feed embeds",
+      "consent-gated third-party embeds"
+    ],
+    "notSuitableFor": [
+      "inline video",
+      "static images"
+    ]
+  },
+  "notes": "NO UI Kit source. Consent-gated social feed; requires consent-management integration (comfort cookies) - flag for manual wiring.",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}

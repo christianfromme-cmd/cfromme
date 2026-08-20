@@ -1,0 +1,41 @@
+{
+  "variantName": "hero-stage",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "hero stage carousel (sli01) at top of page",
+    "templateSource": "hero"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "spacious",
+    "purpose": "stage-hero",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "rotating slides: headline + subheading + CTA (+ optional image)",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "landing page top-of-page stages",
+      "rotating hero banners",
+      "campaign stages"
+    ],
+    "notSuitableFor": [
+      "single static hero without rotation",
+      "text-only intros"
+    ]
+  },
+  "notes": "RWE sli01--stage-components carousel. Base hero has no rotation logic; slide rotation to be added during block development.",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}

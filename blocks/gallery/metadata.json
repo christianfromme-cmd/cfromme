@@ -1,0 +1,41 @@
+{
+  "variantName": "gallery",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "'Global impact' interactive world map -> static country-card grid",
+    "templateSource": "cards"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "map-countrygrid",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "grid of country/region cards (image + label + link)",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "country/region grids",
+      "static galleries of linked image cards",
+      "map fallback grids"
+    ],
+    "notSuitableFor": [
+      "tabular data",
+      "text-only lists"
+    ]
+  },
+  "notes": "UI Kit maps 'Global impact' map -> gallery. Bespoke block templated from cards. The interactive hotspot map itself has NO UI Kit source (rebuild/integrate); this variant is the static country-card fallback content model.",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}
