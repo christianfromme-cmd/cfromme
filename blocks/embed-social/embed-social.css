@@ -1,0 +1,67 @@
+/*
+ * Embed Social (placeholder)
+ * Clean, centered intro standing in for the consent-gated RWE social feed.
+ * Teal heading + brand-blue body text (from brand tokens), with a subtle
+ * bordered/tinted panel suggesting where the live feed would render.
+ */
+
+.embed-social {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.embed-social .embed-social-intro {
+  margin: 0 auto;
+}
+
+.embed-social .embed-social-intro h2 {
+  margin-top: 0;
+  color: var(--link-color); /* RWE petrol/teal */
+}
+
+.embed-social .embed-social-intro p {
+  margin: 0.5em auto 0;
+  max-width: 640px;
+  color: var(--text-color); /* RWE brand blue */
+  font-size: var(--body-font-size-m);
+  line-height: 1.5;
+}
+
+/* Placeholder panel — where the live consent-gated feed would render */
+.embed-social .embed-social-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 40px 24px;
+  border: 1px dashed color-mix(in srgb, var(--link-color) 45%, transparent);
+  border-radius: 8px;
+  background-color: color-mix(in srgb, var(--energy-green) 8%, var(--background-color));
+}
+
+.embed-social .embed-social-panel-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--energy-gradient);
+  opacity: 0.85;
+}
+
+.embed-social .embed-social-panel-note {
+  margin: 0;
+  max-width: 420px;
+  color: color-mix(in srgb, var(--text-color) 70%, transparent);
+  font-size: var(--body-font-size-s);
+  line-height: 1.45;
+}
+
+@media (width >= 900px) {
+  .embed-social .embed-social-panel {
+    margin-top: 36px;
+    padding: 56px 32px;
+  }
+}

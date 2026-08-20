@@ -1,0 +1,100 @@
+/*
+ * cards-article — RWE careers teaser cards
+ * Source: https://www.rwe.com/en/rwe-careers-portal/ (article.tea01--image-left)
+ * Cards are blue->teal gradient panels with white text and a CTA affordance.
+ * Values extracted from source computed styles (see migration-work/cards-article-extracted.css).
+ */
+
+.cards-article > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* Card = gradient panel, white text, sharp corners */
+.cards-article > ul > li {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-image: var(--energy-gradient-diagonal, linear-gradient(45deg, #1d4477 22%, #00a19f));
+  color: #fff;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+/* Image cards: image sits on top, gradient text panel below */
+.cards-article .cards-article-card-image {
+  line-height: 0;
+}
+
+.cards-article .cards-article-card-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* Text/body panel */
+.cards-article .cards-article-card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.cards-article .cards-article-card-body h3 {
+  margin: 0 0 24px;
+  font-size: var(--heading-size-l, 24px);
+  font-weight: 700;
+  line-height: 32px;
+  color: #fff;
+}
+
+.cards-article .cards-article-card-body p {
+  margin: 0 0 24px;
+  font-size: var(--body-font-size-m, 18px);
+  line-height: 27px;
+  color: #fff;
+}
+
+/* Push the CTA to the bottom of the card so cards align in a row */
+.cards-article .cards-article-card-body p:last-child {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+/* CTA — solid teal affordance matching source .tea01r--affordance (8px 16px, radius 5px) */
+.cards-article .cards-article-card-body p:last-child a:any-link {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 5px;
+  background-color: var(--energy-green-dark, #00a19f);
+  color: #fff;
+  font-size: var(--body-font-size-m, 18px);
+  font-weight: 400;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.cards-article .cards-article-card-body p:last-child a:hover,
+.cards-article .cards-article-card-body p:last-child a:focus-visible {
+  background-color: var(--brand-blue, #1d4477);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Hover lift on the whole card */
+.cards-article > ul > li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgb(29 68 119 / 20%);
+}
+
+/* Tablet / desktop: 2 or 3 columns depending on card count.
+   auto-fit keeps 2-up grids at 2 cols and 3-up grids at 3 cols on wide screens. */
+@media (width >= 900px) {
+  .cards-article > ul {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}

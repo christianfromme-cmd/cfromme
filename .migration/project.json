@@ -1,0 +1,11 @@
+{
+  "type": "da",
+  "sites": {
+    "cfromme": {
+      "previewOrg": "christianfromme-cmd",
+      "previewSite": "cfromme",
+      "contentHostUrl": "https://content.da.live/christianfromme-cmd/cfromme/",
+      "libraryUrl": "https://main--cfromme--christianfromme-cmd.aem.page//tools/sidekick/library.json"
+    }
+  }
+}

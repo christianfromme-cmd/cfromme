@@ -1,0 +1,118 @@
+{
+  "metadata": {
+    "projectType": "da"
+  },
+  "templates": [
+    {
+      "name": "careers-portal",
+      "urls": [
+        "https://www.rwe.com/en/rwe-careers-portal/"
+      ],
+      "coverageGaps": [],
+      "description": "RWE careers portal landing page: hero stage carousel, 'Latest at #TeamRWE' shortnews ticker, job/opportunity card grids, centered intro content sections, interactive world map (hotspot) with adjacent text, image-left teaser (about), partner/reviews logo slider, FAQ accordion, and closing energy-waves grid.",
+      "blocks": [
+        {
+          "name": "hero-stage",
+          "instances": [
+            "#off-screen-content > div > header .sli01--stage-components.sli01--carousel"
+          ]
+        },
+        {
+          "name": "ticker",
+          "instances": [
+            "#off-screen-content > div > main .short-news"
+          ]
+        },
+        {
+          "name": "cards-article",
+          "instances": [
+            "#off-screen-content > div > main div.row:has(> div[class*=\"col-md\"] article.tea01--image-left)"
+          ]
+        },
+        {
+          "name": "columns-about",
+          "instances": [
+            "#off-screen-content > div > main .rwe-tick01:has(figure)"
+          ]
+        },
+        {
+          "name": "columns-pullquote",
+          "instances": [
+            "#off-screen-content > div > main > section:nth-of-type(5) > div.container"
+          ]
+        },
+        {
+          "name": "columns-promo",
+          "instances": [
+            "#off-screen-content > div > main > section.teaser-grid--full-width"
+          ]
+        },
+        {
+          "name": "columns-note",
+          "instances": [
+            "#off-screen-content > div > main > section.color-background-2.energy-waves-grid"
+          ]
+        },
+        {
+          "name": "gallery",
+          "instances": [
+            "#off-screen-content > div > main > section:nth-of-type(7) .hotspot-component"
+          ]
+        },
+        {
+          "name": "carousel-reviews",
+          "instances": [
+            "#off-screen-content > div > main > section.color-background-2:nth-of-type(9) .sli01--text-components.sli01--carousel"
+          ]
+        },
+        {
+          "name": "embed-social",
+          "instances": [
+            "#off-screen-content > div > main > section.color-background-2:has(.sli01--text-components) + section .rwe-tick01"
+          ]
+        },
+        {
+          "name": "faq-list",
+          "instances": [
+            "#off-screen-content > div > main .acc01-faq"
+          ]
+        },
+        {
+          "name": "section-rc3",
+          "instances": [
+            "#off-screen-content > div > main > section.color-background-2:nth-of-type(2)"
+          ],
+          "section": "tinted"
+        },
+        {
+          "name": "section-rc5",
+          "instances": [
+            "#off-screen-content > div > main > section.color-background-2:nth-of-type(4)"
+          ],
+          "section": "tinted"
+        },
+        {
+          "name": "section-rc6",
+          "instances": [
+            "#off-screen-content > div > main > section.color-background-2:nth-of-type(6)"
+          ],
+          "section": "tinted"
+        },
+        {
+          "name": "section-rc9",
+          "instances": [
+            "#off-screen-content > div > main > section.color-background-2:nth-of-type(9)"
+          ],
+          "section": "tinted"
+        },
+        {
+          "name": "section-rc13",
+          "instances": [
+            "#off-screen-content > div > main > section.color-background-2.energy-waves-grid"
+          ],
+          "section": "tinted"
+        }
+      ]
+    }
+  ]
+}

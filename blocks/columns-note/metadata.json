@@ -1,0 +1,40 @@
+{
+  "variantName": "columns-note",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "closing 'Note on inclusive language' energy-waves-grid section",
+    "templateSource": "columns"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "accent",
+    "density": "wide",
+    "purpose": "decorative-note",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "single-column rich-text note framed by decorative graphics",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "styled closing notes",
+      "rich-text callouts with decorative background graphics"
+    ],
+    "notSuitableFor": [
+      "multi-column comparisons",
+      "card grids"
+    ]
+  },
+  "notes": "RWE energy-waves-grid (loosefield decorative graphics) -> columns-note. Decorative energy-wave PNGs to be styled in CSS.",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}

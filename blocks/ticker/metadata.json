@@ -1,0 +1,40 @@
+{
+  "variantName": "ticker",
+  "baseBlock": "carousel",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "'Latest at #TeamRWE' shortnews rotating strip",
+    "templateSource": "carousel"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "tight",
+    "purpose": "shortnews",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "rotating single-item news strip: heading + text + link",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "rotating news/announcement strips",
+      "single-item auto-rotating tickers"
+    ],
+    "notSuitableFor": [
+      "multi-item card grids",
+      "image hero carousels"
+    ]
+  },
+  "notes": "RWE atoms-shortnews -> ticker. Bespoke block templated from carousel; single-item rotation + autoplay to be implemented.",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}

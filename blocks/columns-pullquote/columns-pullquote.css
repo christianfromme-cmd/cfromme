@@ -1,0 +1,95 @@
+/* columns-pullquote — attributed quote: circular portrait + name/role beside heading + quotation.
+   Values extracted from source computed styles (RWE .round-image--highlight). */
+
+.columns-pullquote > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--tinted-bg); /* #e8e8e4 sand */
+}
+
+/* --- Portrait / attribution cell --- */
+.columns-pullquote .columns-pullquote-portrait {
+  padding: 32px;
+  text-align: center;
+}
+
+.columns-pullquote .columns-pullquote-portrait p {
+  margin: 0;
+}
+
+.columns-pullquote .columns-pullquote-portrait picture {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.columns-pullquote .columns-pullquote-portrait img {
+  width: 100%;
+  max-width: 326px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* name */
+.columns-pullquote .columns-pullquote-portrait strong {
+  color: var(--brand-blue);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+}
+
+/* role / subtitle */
+.columns-pullquote .columns-pullquote-portrait p:last-child {
+  color: var(--brand-blue);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+/* --- Quote cell --- */
+.columns-pullquote .columns-pullquote-quote {
+  padding: 32px;
+}
+
+.columns-pullquote .columns-pullquote-quote h4 {
+  margin: 0 0 24px;
+  color: var(--brand-blue);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.columns-pullquote .columns-pullquote-quote p {
+  margin: 0 0 24px;
+  color: var(--brand-blue);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.columns-pullquote .columns-pullquote-quote p:last-child {
+  margin-bottom: 0;
+}
+
+@media (width >= 900px) {
+  .columns-pullquote > div {
+    flex-flow: row wrap;
+    align-items: center;
+  }
+
+  .columns-pullquote .columns-pullquote-portrait {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+  }
+
+  .columns-pullquote .columns-pullquote-quote {
+    flex: 1;
+  }
+
+  .columns-pullquote .columns-pullquote-quote h4 {
+    font-size: 32px;
+    line-height: 38px;
+  }
+}

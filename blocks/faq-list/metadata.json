@@ -1,0 +1,40 @@
+{
+  "variantName": "faq-list",
+  "baseBlock": "accordion",
+  "version": "1.0.0",
+  "created": "2026-08-19T16:00:05.897712Z",
+  "sourceContext": {
+    "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
+    "originPage": "FAQ accordion (acc01)",
+    "templateSource": "accordion"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "faq",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "expandable Q&A pairs (label + rich-text answer)",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "FAQ sections",
+      "expandable Q&A lists"
+    ],
+    "notSuitableFor": [
+      "tabbed content",
+      "single static paragraph"
+    ]
+  },
+  "notes": "RWE acc01 accordion -> faq-list (bespoke accordion variant, two-column layout acc--two-column).",
+  "usage": {
+    "pagesUsing": [
+      "/en/rwe-careers-portal/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-19T16:00:05.897712Z"
+  }
+}

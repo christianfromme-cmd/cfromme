@@ -1,0 +1,197 @@
+/* hero-stage — full-width rotating stage carousel (RWE careers) */
+
+/* full-bleed: escape the section max-width/padding */
+.hero-stage-container {
+  margin: 0;
+  padding: 0;
+}
+
+.hero-stage-container .hero-stage-wrapper {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-stage {
+  position: relative;
+  overflow: hidden;
+  min-height: 460px;
+
+  /* fallback background behind the (unavailable) source video/image:
+     RWE dark-blue -> petrol gradient */
+  background-image: linear-gradient(45deg, #1d4477 22%, #00a19f);
+  background-color: #1d4477;
+}
+
+/* slides stacked; only the active one shown */
+.hero-stage-slide {
+  display: none;
+  min-height: inherit;
+  padding: 40px 24px 64px;
+  box-sizing: border-box;
+}
+
+.hero-stage-slide.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* content column, constrained + centered like source (1170px) */
+.hero-stage-content {
+  width: 100%;
+  max-width: var(--content-max-width, 1170px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* headline (h1 on first slide, h2 on later slides — styled identically) */
+.hero-stage .hero-stage-headline {
+  margin: 0;
+  color: #fff;
+  font-size: var(--heading-font-size-xxl);
+  font-weight: 700;
+  line-height: 1.09;
+}
+
+/* lead phrase of the headline: own line, energy-green accent */
+.hero-stage .hero-stage-headline .hero-stage-headline-accent {
+  display: block;
+  color: var(--energy-green, #3ed8c3);
+}
+
+/* subheadline */
+.hero-stage h3 {
+  margin: 12px 0 20px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* paragraphs (CTA wrapper) */
+.hero-stage p {
+  margin: 0;
+}
+
+/* CTA */
+.hero-stage a.hero-stage-cta {
+  display: inline-block;
+  margin: 0;
+  padding: 8px 24px;
+  border: 2px solid var(--energy-green-dark, #00a19f);
+  border-radius: 5px;
+  background-color: var(--energy-green-dark, #00a19f);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.hero-stage a.hero-stage-cta:hover,
+.hero-stage a.hero-stage-cta:focus-visible {
+  background-color: #1d4477;
+  border-color: #1d4477;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* prev / next arrows */
+.hero-stage-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.hero-stage-arrow:hover {
+  opacity: 1;
+}
+
+.hero-stage-arrow::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin: 0 auto;
+  border-top: 3px solid currentcolor;
+  border-right: 3px solid currentcolor;
+}
+
+.hero-stage-prev {
+  left: 8px;
+}
+
+.hero-stage-prev::before {
+  transform: rotate(-135deg);
+}
+
+.hero-stage-next {
+  right: 8px;
+}
+
+.hero-stage-next::before {
+  transform: rotate(45deg);
+}
+
+/* dots */
+.hero-stage-dots {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.hero-stage-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 0;
+}
+
+.hero-stage-dot.active {
+  background: #fff;
+  opacity: 1;
+}
+
+@media (width >= 900px) {
+  .hero-stage {
+    min-height: 640px;
+  }
+
+  .hero-stage-slide {
+    padding: 40px 48px 96px;
+  }
+
+  .hero-stage h3 {
+    max-width: 620px;
+  }
+
+  .hero-stage-prev {
+    left: 24px;
+  }
+
+  .hero-stage-next {
+    right: 24px;
+  }
+}

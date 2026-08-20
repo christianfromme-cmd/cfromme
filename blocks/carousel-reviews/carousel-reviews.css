@@ -1,0 +1,184 @@
+/* Block: carousel-reviews — centered single-slide Glassdoor reviews slider */
+
+/* Values extracted from source computed styles (rwe.com careers portal). */
+
+.carousel-reviews {
+  max-width: 770px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.carousel-reviews .carousel-reviews-slides-container {
+  position: relative;
+}
+
+.carousel-reviews .carousel-reviews-slides,
+.carousel-reviews .carousel-reviews-slide-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-reviews .carousel-reviews-slides {
+  display: flex;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+}
+
+.carousel-reviews .carousel-reviews-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-reviews .carousel-reviews-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  padding: 8px 16px;
+}
+
+/* Glassdoor logo — ~99px square, centered */
+.carousel-reviews .carousel-reviews-slide-image {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-reviews .carousel-reviews-slide-image picture {
+  display: inline-block;
+}
+
+.carousel-reviews .carousel-reviews-slide-image img {
+  width: 99px;
+  height: 99px;
+  object-fit: contain;
+}
+
+/* Review quote */
+.carousel-reviews .carousel-reviews-slide-content {
+  text-align: center;
+  max-width: 560px;
+}
+
+.carousel-reviews .carousel-reviews-slide-content p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 27px;
+  color: var(--brand-blue);
+}
+
+.carousel-reviews .carousel-reviews-slide-content strong {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+  color: var(--brand-blue);
+}
+
+/* Control row: prev arrow, dot indicators, next arrow — single centered line */
+.carousel-reviews .carousel-reviews-navigation-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.carousel-reviews .carousel-reviews-slide-indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.carousel-reviews .carousel-reviews-slide-indicator button {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: #b5b5b0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.carousel-reviews .carousel-reviews-slide-indicator button:disabled,
+.carousel-reviews .carousel-reviews-slide-indicator button:hover,
+.carousel-reviews .carousel-reviews-slide-indicator button:focus-visible {
+  background-color: var(--energy-green-dark);
+}
+
+/* Arrow controls — chevrons in brand blue, no background */
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-reviews .carousel-reviews-navigation-buttons > button {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--brand-blue);
+}
+
+.carousel-reviews .carousel-reviews-navigation-buttons > button:hover,
+.carousel-reviews .carousel-reviews-navigation-buttons > button:focus-visible {
+  color: var(--energy-green-dark);
+}
+
+.carousel-reviews .carousel-reviews-navigation-buttons > button::after {
+  display: block;
+  content: '';
+  border: 2px solid currentcolor;
+  border-bottom: 0;
+  border-left: 0;
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%) rotate(-135deg);
+}
+
+.carousel-reviews .carousel-reviews-navigation-buttons > button.slide-next::after {
+  transform: translate(-60%, -50%) rotate(45deg);
+}
+
+/* Section heading — centered, matching source (source line 1 teal, line 2 blue;
+   single h2 here inherits global teal heading color) */
+main .carousel-reviews-container h2 {
+  text-align: center;
+}
+
+/* CTA link below the carousel */
+.carousel-reviews-container .carousel-reviews-wrapper + .default-content-wrapper {
+  text-align: center;
+  margin-top: 24px;
+}
+
+main .carousel-reviews-container .carousel-reviews-wrapper + .default-content-wrapper p {
+  text-align: center;
+}
+
+main .carousel-reviews-container .carousel-reviews-wrapper + .default-content-wrapper a:any-link,
+main .carousel-reviews-container .carousel-reviews-wrapper + .default-content-wrapper a.button:any-link {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 5px;
+  background-color: var(--energy-green-dark);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+main .carousel-reviews-container .carousel-reviews-wrapper + .default-content-wrapper a:any-link:hover,
+main .carousel-reviews-container .carousel-reviews-wrapper + .default-content-wrapper a.button:any-link:hover {
+  background-color: var(--brand-blue);
+  color: #fff;
+}

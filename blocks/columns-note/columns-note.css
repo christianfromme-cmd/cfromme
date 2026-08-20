@@ -1,0 +1,78 @@
+/* columns-note — "Note on inclusive language"
+ * Single-column rich-text note on the tinted section background.
+ * Values extracted from computed styles at rwe.com/en/rwe-careers-portal.
+ * Decorated DOM: .columns-note.block > div (row) > div (cell) > p
+ */
+
+.columns-note {
+  margin: 0 auto;
+}
+
+.columns-note > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns-note > div > div {
+  order: 1;
+
+  /* subtle nod to the source's decorative energy-wave graphics */
+  padding-top: 24px;
+  border-top: 3px solid transparent;
+  border-image: var(--energy-gradient) 1;
+}
+
+/* note body text — brand blue, 18px/27px, regular weight, left aligned */
+.columns-note p {
+  margin: 0;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+  line-height: 27px;
+  text-align: left;
+}
+
+/* bold lead-in "Note on inclusive language" and other emphasized text */
+.columns-note strong {
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+/* inline links — petrol/teal, bold, matching source */
+.columns-note a:any-link {
+  color: var(--link-color);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.columns-note a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* image column support (unused by this content, retained from base pattern) */
+.columns-note img {
+  width: 100%;
+}
+
+.columns-note > div > .columns-note-img-col {
+  order: 0;
+}
+
+.columns-note > div > .columns-note-img-col img {
+  display: block;
+}
+
+@media (width >= 900px) {
+  .columns-note > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: 24px;
+  }
+
+  .columns-note > div > div {
+    flex: 1;
+    order: unset;
+  }
+}

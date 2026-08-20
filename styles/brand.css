@@ -1,0 +1,49 @@
+/*
+ * RWE brand tokens — extracted from https://www.rwe.com/en/rwe-careers-portal/
+ * Note: source uses proprietary "RWE Sans"; system sans-serif fallback used here.
+ */
+:root {
+  /* Fonts */
+  --heading-font-family: "RWE Sans", "Helvetica Neue", arial, sans-serif;
+  --body-font-family: "RWE Sans", "Helvetica Neue", arial, sans-serif;
+
+  /* Brand colors */
+  --background-color: #fff;
+  --text-color: #1d4477;            /* RWE brand blue */
+  --brand-blue: #1d4477;
+  --link-color: #00a19f;            /* RWE petrol/teal */
+  --link-hover-color: #1d4477;
+  --energy-green: #3ed8c3;          /* accent */
+  --energy-green-dark: #00a19f;
+  --tinted-bg: #e8e8e4;             /* color-background-2 */
+  --dark-color: #1d4477;
+  --light-color: #e8e8e4;
+
+  /* Energy-green gradient (RWE CTA / highlight motif) */
+  --energy-gradient: linear-gradient(90deg, #00a19f 0%, #3ed8c3 100%);
+
+  /* Spacing */
+  --content-max-width: 1170px;
+  --section-padding: 32px;
+  --nav-height: 64px;
+
+  /* Heading sizes (desktop) */
+  --heading-size-xxl: 68px;
+  --heading-size-xl: 32px;
+  --heading-size-l: 24px;
+  --heading-size-m: 18px;
+  --heading-size-s: 18px;
+  --heading-size-xs: 16px;
+
+  /* Body */
+  --body-font-size-m: 18px;
+  --body-line-height: 27px;
+}
+
+@media (width <= 900px) {
+  :root {
+    --heading-size-xxl: 36px;
+    --heading-size-xl: 28px;
+    --heading-size-l: 22px;
+  }
+}

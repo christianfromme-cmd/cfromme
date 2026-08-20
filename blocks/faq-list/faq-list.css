@@ -1,0 +1,107 @@
+/*
+ * FAQ List (accordion) — styled to match RWE acc01-faq
+ * Question: teal (#00a19f) bold 18px, chevron toggle, thin divider lines.
+ * Answer: brand-blue (#1d4477) body text, hidden until expanded.
+ * Desktop: two-column masonry layout (matches acc--two-column).
+ */
+
+.faq-list {
+  margin: 0;
+}
+
+/* accordion item — thin divider lines top & bottom (source: 1px #c6d0dd) */
+.faq-list .faq-list-item {
+  border-top: 1px solid #c6d0dd;
+  border-bottom: 1px solid #c6d0dd;
+  break-inside: avoid;
+}
+
+/* stacked borders collapse into a single line between adjacent items */
+.faq-list .faq-list-item + .faq-list-item {
+  border-top: none;
+}
+
+/* question row */
+.faq-list .faq-list-item-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 56px 16px 0;
+  color: var(--link-color);            /* #00a19f teal */
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-list .faq-list-item-label::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list .faq-list-item-label p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+/* chevron toggle indicator (teal, points down when closed) */
+.faq-list .faq-list-item-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 14px;
+  height: 14px;
+  border: solid var(--link-color);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-75%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.faq-list .faq-list-item[open] .faq-list-item-label::after {
+  transform: translateY(-25%) rotate(-135deg);
+}
+
+/* answer body — brand-blue text, revealed when open */
+.faq-list .faq-list-item-body {
+  padding: 0 24px 8px 0;
+  color: var(--text-color);            /* #1d4477 */
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.faq-list .faq-list-item-body p {
+  margin: 0 0 16px;
+  color: var(--text-color);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+}
+
+.faq-list .faq-list-item-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* answer links — RWE light blue, bold (source #00b1eb / 700) */
+.faq-list .faq-list-item-body a:any-link {
+  color: #00b1eb;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.faq-list .faq-list-item-body a:hover {
+  text-decoration: underline;
+}
+
+/* desktop: two-column masonry accordion (matches acc--two-column) */
+@media (width >= 900px) {
+  .faq-list {
+    column-count: 2;
+    column-gap: 24px;
+  }
+}
