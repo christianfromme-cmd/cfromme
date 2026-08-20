@@ -1,0 +1,39 @@
+<!-- Code for video player as seen in TIC01 video source -->
+<div data-tpl="mediaContainer">
+    <div data-tpl="video"
+         data-module="video"
+         data-module-config=""
+         data-name="{{nVideoplayerVideoName}}"
+         class="videoplayer-container {{nVideoplayerVideoplayerClass}}">
+        <figure>
+            <div class="videoplayer-content">
+                <video {{#if
+                       nVideoplayerAutoplay}}autoplay="true"
+                       muted="true"
+                       {{/if}}
+                       poster="{{nVideoplayerPosterImageUrl}}"
+                       role="application"
+                       data-url="{{nVideoplayerVideoUrlHigh}}"
+                       data-item-id="{{nVideoplayerVideoId}}"
+                       data-item-name="{{nVideoplayerVideoName}}"
+                       data-language=""
+                       class="video-js videoplayer {{#unless nVideoplayerPosterImageUrl}}posterimg{{/unless}} {{#if nVideoplayerIsFullScreen}}vjs-is-fullscreen{{/if}}"
+                       controls
+                       style="position: relative;">
+                    {{#if nVideoplayerVideoUrlLow}}
+                        <source src="{{nVideoplayerVideoUrlLow}}"
+                                type="{{nVideoplayerVideoTypeLow}}"
+                                media="(max-width:1279px)"
+                                label="SD"
+                                res="720" />
+                    {{else}}
+                        <source src="{{nVideoplayerVideoUrlHigh}}"
+                                type="{{nVideoplayerVideoTypeHigh}}"
+                                label="HD"
+                                res="1080" />
+                    {{/if}}
+                </video>
+            </div>
+        </figure>
+    </div>
+</div>

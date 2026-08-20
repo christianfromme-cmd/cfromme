@@ -1,0 +1,22 @@
+
+<div data-tpl="tbl01"
+     class="{{tbl01CssClasses}}">
+    
+    <h3 class="subheadline headline--bold">{{tbl01Subheadline}}</h3>
+    <figure>
+        <table class="table {{tbl01TableTypeClasses}}">
+            <tbody>
+                {{#if tbl01IsDemo}}
+                    {{#items}}
+                        {{> atoms-tbl01-row tbl01RowCol1=tbl01Col1 tbl01RowCol2=tbl01Col2}}
+                    {{/items}}
+                {{else}}
+                    {{> @partial-block }}
+                {{/if}}
+            </tbody>
+        </table>
+        {{#if tbl01Caption}}
+            <figcaption>{{tbl01Caption}}</figcaption>
+        {{/if}}
+    </figure>
+</div>

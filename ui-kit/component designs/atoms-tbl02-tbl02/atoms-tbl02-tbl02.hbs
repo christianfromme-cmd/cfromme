@@ -1,0 +1,45 @@
+
+<div data-tpl="tbl02"
+     class="{{tbl01CssClasses}} {{#if tbl01MobileviewClass}}{{tbl01MobileviewClass}}{{else}}{{/if}} {{#if tbl01CustomColumnsClass}}{{tbl01CustomColumnsClass}}{{else}}{{/if}}">
+    
+    <h3>{{tbl01Subheadline}}</h3>
+    <figure>
+        <div class="table-wrap-outer">
+            <div class="table-wrap-inner">
+                
+                <table cellspacing="0"
+                       cellpadding="0"
+                       class="table {{tbl01TableTypeClasses}} {{tbl01CustomColumnsClass}}">
+                    <thead>
+                        {{#tableHeadItems}}
+                            <tr>
+                                <th>{{tbl01Col1}}</th>
+                                <th>{{tbl01Col2}}</th>
+                                <th>{{tbl01Col3}}</th>
+                                <th>{{tbl01Col4}}</th>
+                                <th>{{tbl01Col5}}</th>
+                                <th>{{tbl01Col6}}</th>
+                            </tr>
+                        {{/tableHeadItems}}
+                    </thead>
+                    <tbody>
+                        {{#items}}
+                            <tr>
+                                <td>{{tbl01Col1}}</td>
+                                <td>{{tbl01Col2}}</td>
+                                <td>{{tbl01Col3}}</td>
+                                <td>{{tbl01Col4}}</td>
+                                <td>{{tbl01Col5}}</td>
+                                <td>{{tbl01Col6}}</td>
+                            </tr>
+                        {{/items}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{#if tbl01Caption}}
+            <figcaption>{{tbl01Caption}}</figcaption>
+        {{/if}}
+    </figure>
+</div>
