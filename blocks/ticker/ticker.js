@@ -6,8 +6,9 @@ const placeholders = {
   of: 'of',
 };
 
-// RWE "Latest at #TeamRWE" short-news header icon (source: kurznachrichtenmodul-info.svg).
-const NEWS_ICON = '<img src="https://www.rwe.com/-/media/RWE/images/homepage/kurznachrichtenmodul/kurznachrichtenmodul-info.svg" alt="" loading="lazy">';
+// RWE "Latest at #TeamRWE" short-news header icon. Local copy of the RWE UI Kit
+// source file (icons/kurznachrichtenmodul-info.svg) — no external request.
+const NEWS_ICON = '<img src="/icons/kurznachrichtenmodul-info.svg" alt="" loading="lazy">';
 
 function showSlide(block, index = 0) {
   const slides = block.querySelectorAll('.ticker-slide');
