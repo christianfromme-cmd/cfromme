@@ -112,9 +112,11 @@ export default function decorate(block) {
   galleryId += 1;
   const rows = [...block.children];
 
-  // Build the country list (fallback / accessible / small-screen view).
+  // Build the country list. It stays in the DOM as the data source for the
+  // popovers and as a screen-reader-accessible alternative to the visual map,
+  // but is visually hidden — details are shown only on marker click.
   const list = document.createElement('ul');
-  list.className = 'gallery-list';
+  list.className = 'gallery-list gallery-list-visually-hidden';
   const entries = rows.map((row) => buildListItem(row));
   entries.forEach((li) => list.append(li));
 
@@ -174,7 +176,9 @@ export default function decorate(block) {
   };
   const openPopover = (marker, li) => {
     popBody.innerHTML = '';
-    // clone the authored body (heading + copy + links) into the popover
+    // clone the authored image + body (heading + copy + links) into the popover
+    const image = li.querySelector('.gallery-card-image');
+    if (image) popBody.append(image.cloneNode(true));
     const body = li.querySelector('.gallery-card-body');
     if (body) popBody.append(body.cloneNode(true));
     popover.hidden = false;

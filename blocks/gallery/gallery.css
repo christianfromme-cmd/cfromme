@@ -108,7 +108,22 @@
 .gallery .gallery-popover-close::before { transform: translate(-50%, -50%) rotate(45deg); }
 .gallery .gallery-popover-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
 
-/* ---------- Accessible / small-screen country list ---------- */
+/* ---------- Country list ----------
+   Kept in the DOM as the popover data source and a screen-reader-accessible
+   alternative to the visual map, but visually hidden: details show only on
+   marker click. */
+.gallery .gallery-list.gallery-list-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 .gallery .gallery-list {
   list-style: none;
   margin: 32px 0 0;
@@ -239,7 +254,22 @@
 }
 
 /* ---------- Popover body (higher specificity — kept after list rules
-   so it overrides the shared .gallery-card-body treatment) ---------- */
+   so it overrides the shared .gallery-card-body / -image treatment) ---------- */
+
+/* Popover image (cloned from the authored card), bled to the popover edges */
+.gallery .gallery-popover .gallery-card-image {
+  margin: -20px -24px 16px;
+  line-height: 0;
+}
+
+.gallery .gallery-popover .gallery-card-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 6px 6px 0 0;
+}
+
 .gallery .gallery-popover .gallery-card-body {
   padding: 0;
 }
