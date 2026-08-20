@@ -1,0 +1,28 @@
+
+<div class="field-group textarea">
+    <label for="{{ffTextareaUniqueFieldName}}"
+           class="">{{ffTextareaLabel}} {{#if ffTextareaIsRequired}}*{{/if}}</label>
+    <div class="field-group__container field-group__container--has-outer">
+        <label class="form-control__container">
+            <textarea id="{{ffTextareaUniqueFieldName}}"
+                      name="{{ffTextareaUniqueFieldName}}"
+                      class="form-control__field"
+                      autocorrect="off"
+                      spellcheck="false"
+                      value=""
+                      maxlength="255"
+                      placeholder=""
+                      data-sc-tracking=""
+                      data-sc-field-name=""
+                      data-sc-field-key=""
+                      data-val-required=""></textarea>
+            <div class="form-control__btns"></div>
+        </label>
+        
+        <div class="field-group__btns field-group__btns--outer">
+        </div>
+    </div>
+    <span class="field-validation-valid error-block"
+          data-valmsg-for="{{ffTextareaUniqueFieldName}}"
+          data-valmsg-replace="true"></span>
+</div>

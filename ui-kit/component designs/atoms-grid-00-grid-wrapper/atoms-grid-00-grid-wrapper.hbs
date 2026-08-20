@@ -1,0 +1,14 @@
+<section data-tpl="grid-wrapper"
+         class="{{cssClasses}}">
+    {{> atoms-energywaves showEnergywaves=showEnergywaves }}
+
+    <div class="container">
+        <div class="row">
+            {{#if gridWrapperIsDemo}}
+                {{> atoms-colHelper colHelperIsDemoItem=true colHelperGridClasses="col-sm-12" colHelperDemoItemName="col-sm-12"}}
+            {{else}}
+                {{> @partial-block }}
+            {{/if}}
+        </div>
+    </div>
+</section>

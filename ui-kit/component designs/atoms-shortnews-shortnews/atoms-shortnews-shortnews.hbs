@@ -1,0 +1,39 @@
+<div class="short-news">
+    
+    <div class="short-news__header {{shortNewsHeadlineColor}}">
+        <div class="short-news-icon">
+            <img src="{{shortNewsIconPath}}" />
+        </div>
+        <h2>{{shortNewsHeadline}}</h2>
+    </div>
+
+    {{#if shortNewsElements}}
+        <div class="short-news__slider"
+             data-slider-speed="{{shortNewsSliderSpeed}}">
+            
+            <div class="slider-nav {{shortNewsDisplayNavClass}} {{shortNewsDateDisabledClass}}">
+                <div class="slider-nav__prev"></div>
+                <div class="slider-nav__dots"></div>
+                <div class="slider-nav__next"></div>
+            </div>
+            <div class="slider-content"
+                 data-dtm-index>
+
+                {{#if shortNewsIsDemo}}
+                    {{> atoms-shortnews-element shortNewsElementUniqueID=1 shortNewsElementNewsDate="Monday, 2023-06-01" shortNewsElementHeadline="News-Headline 1" shortNewsElementDescription="Aliqua minim ullamco in tempor nostrud esse reprehenderit in quis aliquip." shortNewsElementLinkUrl="https://www.rwe.com/" shortNewsElementCtaButtonLabel="Read more" shortNewsElementButtonColor="color-affordance--gradient-green affordance" shortNewsElementImageUrl="/images/sample-image-01.png"}}
+                    {{> atoms-shortnews-element shortNewsElementUniqueID=2 shortNewsElementNewsDate="Monday, 2023-06-01" shortNewsElementHeadline="News-Headline 2" shortNewsElementDescription="Aliqua minim ullamco in tempor nostrud esse reprehenderit in quis aliquip." shortNewsElementLinkUrl="https://www.rwe.com/" shortNewsElementCtaButtonLabel="Read more" shortNewsElementButtonColor="color-affordance--gradient-green affordance" shortNewsElementImageUrl="/images/sample-image-01.png"}}
+                    {{> atoms-shortnews-element shortNewsElementUniqueID=3 shortNewsElementNewsDate="Monday, 2023-06-01" shortNewsElementHeadline="News-Headline 3" shortNewsElementDescription="Aliqua minim ullamco in tempor nostrud esse reprehenderit in quis aliquip." shortNewsElementLinkUrl="https://www.rwe.com/" shortNewsElementCtaButtonLabel="Read more" shortNewsElementButtonColor="color-affordance--gradient-green affordance" shortNewsElementImageUrl="/images/sample-image-01.png"}}
+                    {{> atoms-shortnews-element shortNewsElementUniqueID=4 shortNewsElementNewsDate="Monday, 2023-06-01" shortNewsElementHeadline="News-Headline 4" shortNewsElementDescription="Aliqua minim ullamco in tempor nostrud esse reprehenderit in quis aliquip." shortNewsElementLinkUrl="https://www.rwe.com/" shortNewsElementCtaButtonLabel="Read more" shortNewsElementButtonColor="color-affordance--gradient-green affordance" shortNewsElementImageUrl="/images/sample-image-01.png"}}
+                    {{> atoms-shortnews-element shortNewsElementUniqueID=5 shortNewsElementNewsDate="Monday, 2023-06-01" shortNewsElementHeadline="News-Headline 5" shortNewsElementDescription="Aliqua minim ullamco in tempor nostrud esse reprehenderit in quis aliquip." shortNewsElementLinkUrl="https://www.rwe.com/" shortNewsElementCtaButtonLabel="Read more" shortNewsElementButtonColor="color-affordance--gradient-green affordance" shortNewsElementImageUrl="/images/sample-image-01.png"}}
+                {{else}}
+                    {{> @partial-block }}
+                {{/if}}
+
+            </div>
+        </div>
+    {{else}}
+        
+        <p class="short-news__info-text">{{shortNewsDefaultInfoText}}</p>
+    {{/if}}
+
+</div>

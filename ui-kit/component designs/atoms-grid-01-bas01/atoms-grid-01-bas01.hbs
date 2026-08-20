@@ -1,0 +1,14 @@
+<section data-tpl="grid-bas-01"
+         class="{{bas01CssClasses}}">
+    {{> atoms-energywaves showEnergywaves=showEnergywaves }}
+
+    <div class=" container-fluid">
+        <div class="row">
+            {{#if bas01IsDemo}}
+                <div class="grid-demo-item">full-width</div>
+            {{else}}
+                {{> @partial-block }}
+            {{/if}}
+        </div>
+    </div>
+</section>

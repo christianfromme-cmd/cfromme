@@ -1,0 +1,42 @@
+<div data-tpl="n-gallery"
+     class="carousel-container">
+    <!-- data-autoplay: boolean (optional) - Controls if the slides should autoplay. If not set, default behavior is false -->
+    <!-- data-autoplayspeed: number (milliseconds, optional) - Controls the speed of the autoplay. If not set, default value is 2500ms -->
+    <div data-autoplay="{{nGalleryAutoplay}}"
+         data-autoplayspeed="{{nGalleryAutoplaySpeed}}"
+         class="n-gallery_swiper swiper">
+        <div class="swiper-wrapper">
+            {{#if nGalleryIsDemo}}
+                <div class="swiper-slide">{{> atoms-n-picture nPictureSrc="../../images/placeholder/100x200.jpg"}}</div>
+                <div class="swiper-slide">{{> atoms-n-picture nPictureSrc="../../images/placeholder/800x450.svg"}}</div>
+                <div class="swiper-slide">{{> atoms-n-picture nPictureSrc="../../images/placeholder/100x200.jpg"}}</div>
+                <div class="swiper-slide">{{> atoms-n-picture nPictureSrc="../../images/placeholder/800x450.svg"}}</div>
+                <div class="swiper-slide">{{> atoms-n-picture nPictureSrc="../../images/placeholder/800x450.svg"}}</div>
+            {{else}}
+                {{#if nGalleryIsSinglePicture}}
+                    <div class="swiper-slide">{{> atoms-n-picture nPictureSrc="../../images/placeholder/800x450.svg"}}
+                    </div>
+                {{else}}
+                    {{> @partial-block }}
+                {{/if}}
+            {{/if}}
+        </div>
+        <!-- Pagination block is always included, even for single images. In this case the pagination is visually hidden via CSS -->
+        <!-- data-icon: string (optional) - Override the default icon path for prev and next buttons. If not set, default value is "/-/media/RWE/Common-Icons/Arrow-Left.svg" and "/-/media/RWE/Common-Icons/Arrow-Right.svg" -->
+        <div class="n-gallery__pagination-wrapper">
+            <a class="navigation-button-container prev-button-container"
+               aria-disabled="false"
+               data-auto-event-observed="true"
+               data-icon="../../media/RWE/Common-Icons/Arrow-Left.svg">
+                <i class="prev-button-icon"></i>
+            </a>
+            <div class="swiper-pagination n-gallery_pagination"></div>
+            <a class="navigation-button-container next-button-container"
+               aria-disabled="false"
+               data-auto-event-observed="true"
+               data-icon="../../media/RWE/Common-Icons/Arrow-Right.svg">
+                <i class="next-button-icon"></i>
+            </a>
+        </div>
+    </div>
+</div>

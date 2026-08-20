@@ -1,0 +1,18 @@
+<section data-tpl="grid-ext-05"
+         class="{{ext05CssClasses}}">
+    {{> atoms-energywaves showEnergywaves=showEnergywaves }}
+
+    <div class="container">
+        <div class="row">
+            {{#if ext05IsDemo}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-4 col-sm-6" colHelperDemoDataTpl="tea03r" colHelperNumber="1" colHelperDemoItemName="TEA03r"}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-4 col-sm-6" colHelperDemoDataTpl="tea03r" colHelperNumber="2" colHelperDemoItemName="TEA03r"}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-4 col-sm-6" colHelperDemoDataTpl="tea03r" colHelperNumber="3" colHelperDemoItemName="TEA03r"}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-4 col-sm-6" colHelperDemoDataTpl="tea03r" colHelperNumber="4" colHelperDemoItemName="TEA03r"}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-4 col-sm-6" colHelperDemoDataTpl="tea03r" colHelperNumber="5" colHelperDemoItemName="TEA03r"}}
+            {{else}}
+                {{> @partial-block }}
+            {{/if}}
+        </div>
+    </div>
+</section>

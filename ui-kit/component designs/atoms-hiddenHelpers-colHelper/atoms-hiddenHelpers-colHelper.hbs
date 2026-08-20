@@ -1,0 +1,8 @@
+<div class="grid-content {{# if colHelperNumber }}grid-content-{{colHelperNumber}}{{/if}} {{colHelperGridClasses}}">
+    {{#if colHelperIsDemoItem}}
+        <div class="grid-demo-item"
+             data-tpl="{{colHelperDemoDataTpl}}"><span>{{colHelperDemoItemName}}</span></div>
+    {{else}}
+        {{> @partial-block }}
+    {{/if}}
+</div>

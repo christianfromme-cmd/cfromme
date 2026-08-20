@@ -1,0 +1,19 @@
+<section data-tpl="grid-bas-02"
+         class="{{bas02CssClasses}}">
+
+    {{> atoms-energywaves showEnergywaves=showEnergywaves }}
+
+    <div class="container">
+        <div class="row">
+            {{#if bas02IsDemo}}
+                {{#if colHelperGridClasses}}
+                    {{> atoms-colHelper colHelperGridClasses=colHelperGridClasses colHelperDemoItemName="default padding"}}
+                {{else}}
+                    {{> atoms-colHelper colHelperGridClasses="col-sm-12" colHelperDemoItemName="default padding"}}
+                {{/if}}
+            {{else}}
+                {{> @partial-block}}
+            {{/if}}
+        </div>
+    </div>
+</section>

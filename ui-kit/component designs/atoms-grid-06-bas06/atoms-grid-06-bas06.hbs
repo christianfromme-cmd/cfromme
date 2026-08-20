@@ -1,0 +1,17 @@
+<section data-tpl="grid-bas-06"
+         class="{{bas06CssClasses}}">
+    {{> atoms-energywaves showEnergywaves=showEnergywaves }}
+
+    <div class="container">
+        <div class="row">
+            {{#if bas06IsDemo}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-3" colHelperNumber="1" colHelperDemoItemName="col-md-3"}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-3" colHelperNumber="2" colHelperDemoItemName="col-md-3"}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-3" colHelperNumber="3" colHelperDemoItemName="col-md-3"}}
+                {{> atoms-colHelper colHelperGridClasses="col-md-3" colHelperNumber="4" colHelperDemoItemName="col-md-3"}}
+            {{else}}
+                {{> @partial-block }}
+            {{/if}}
+        </div>
+    </div>
+</section>

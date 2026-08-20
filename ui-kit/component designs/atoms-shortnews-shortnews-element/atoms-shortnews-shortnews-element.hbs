@@ -1,0 +1,79 @@
+<div class="slider-element {{shortNewsDateDisabledClass}} {{shortNewsShowHideItemInitiallyClass}}">
+    <div class="slider-element__content">
+        <div class="short-news-date {{shortNewsDateDisabledClass}}">
+            {{shortNewsElementNewsDate}}
+        </div>
+
+        <div class="slider-element__content--horizontal">
+            <div class="slider-element__content--vertical">
+                <h4>{{shortNewsElementHeadline}}</h4>
+                <div class="text-wrapper">
+                    <div class="description-text">
+                        <p class="initial-height">{{shortNewsElementDescription}}</p>
+                    </div>
+                    
+                    <div class="modal-btn"
+                         data-id="autogenerate-{{shortNewsElementUniqueID}}"
+                         data-lang="de-DE">
+                    </div>
+                </div>
+
+
+                {{#if linkUrl}}
+                    <a class="{{shortNewsElementButtonColor}} btn button-component__button button-component__button--link slider-element__content--button"
+                       href="{{shortNewsElementLinkUrl}}"
+                       target="">{{shortNewsElementCtaButtonLabel}}</a>
+                {{/if}}
+
+            </div>
+
+            {{#if shortNewsElementImageUrl}}
+                <div class="slider-element__image">
+                    <div class="short-news-image"
+                         style="background-image: url('{{shortNewsElementImageUrl}}')"></div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+
+</div>
+
+<!--<div class="modal-window">
+    <div class="modal-window__wrapper">
+        <div class="modal-window__header">
+            <div class="modal-window__close-button icon-close"></div>
+        </div>
+        <div class="modal-window__content">
+            {{#if imageUrl}}
+                <img src="{{imageUrl}}" />
+            {{/if}}
+
+            <div class="modal-window__date {{dateDisabledClass}}"> -->
+
+{{!-- @if (Model.ShowTime)
+                    {
+                    @Sitecore.DateUtil.ToServerTime(Model.DateTime.DateTime).ToString("f",
+                    Model.ContextItem.Language.CultureInfo) @Html.Raw("&nbsp;") @timeDictionary @Html.Raw("&nbsp;")
+                    @Model.WinterSommerTimeString
+    
+                    }
+                    else
+                    {
+                    @Sitecore.DateUtil.ToServerTime(Model.DateTime.DateTime).ToString("D",
+                    Model.ContextItem.Language.CultureInfo)
+                    } --}}
+<!--</div>
+            <h2>{{headline}}</h2>
+            <p>{{description}}</p>
+        </div>
+        {{#if linkUrl}}
+            <div class="component button-component">
+                <a class="{{buttonColor}} btn modal-btn button-component__button button-component__button--link"
+                   href="{{linkUrl}}"
+                   target="">
+                    {{ctaButtonLabel}}
+                </a>
+            </div>
+        {{/if}}
+    </div>
+</div> -->
