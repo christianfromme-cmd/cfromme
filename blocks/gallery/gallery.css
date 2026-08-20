@@ -1,25 +1,120 @@
 /*
- * gallery — RWE careers "Global impact" country grid.
+ * gallery — RWE careers "Global impact" interactive hotspot map.
  *
- * NOTE: This is a STATIC-GRID FALLBACK for the original interactive world map
- * with clickable country hotspots. That bespoke map widget has no reusable
- * source, so the imported content is rendered as a responsive grid of country
- * cards (image + country name + description + CTA links). Styling therefore
- * follows the RWE brand system (see styles/styles.css) rather than extracted
- * computed styles from the source map.
+ * Reproduces the live RWE map: a scaling background map image with teal "+"
+ * markers positioned by percentage over each region. Clicking a marker opens
+ * a popover with the country's headline, copy and links. Below the map, an
+ * accessible country list carries the same content (keyboard/SR fallback and
+ * the small-screen experience).
  */
 
-.gallery > ul {
+/* ---------- Interactive map ---------- */
+.gallery .gallery-map {
+  position: relative;
+  width: 100%;
+  background-color: var(--tinted-bg, #e8e8e4);
+}
+
+.gallery .gallery-map-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gallery .gallery-hotspots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Marker = teal circle with a white "+" (fixed tap-target size so it stays
+   usable as the map scales down). */
+.gallery .gallery-hotspot {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px; /* centre on the coordinate */
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--energy-green-dark, #00a19f);
+  box-shadow: 0 2px 6px rgb(29 68 119 / 30%);
+  color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.gallery .gallery-hotspot::after {
+  content: "+";
+  display: block;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+}
+
+.gallery .gallery-hotspot:hover,
+.gallery .gallery-hotspot:focus-visible,
+.gallery .gallery-hotspot.is-active {
+  transform: scale(1.15);
+  background-color: var(--brand-blue, #1d4477);
+  outline: none;
+}
+
+/* ---------- Popover ---------- */
+.gallery .gallery-popover {
+  position: absolute;
+  z-index: 5;
+  width: min(340px, calc(100% - 16px));
+  padding: 20px 24px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgb(29 68 119 / 25%);
+}
+
+.gallery .gallery-popover[hidden] {
+  display: none;
+}
+
+.gallery .gallery-popover-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--brand-blue, #1d4477);
+  cursor: pointer;
+}
+
+.gallery .gallery-popover-close::before,
+.gallery .gallery-popover-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 2px;
+  background-color: currentcolor;
+}
+
+.gallery .gallery-popover-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.gallery .gallery-popover-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* ---------- Accessible / small-screen country list ---------- */
+.gallery .gallery-list {
   list-style: none;
-  margin: 0;
+  margin: 32px 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
 }
 
-/* Card = white panel, sharp corners, subtle border + lift on hover */
-.gallery > ul > li {
+.gallery .gallery-list > li {
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -28,12 +123,11 @@
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.gallery > ul > li:hover {
+.gallery .gallery-list > li:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgb(29 68 119 / 15%);
 }
 
-/* Image sits on top of the card */
 .gallery .gallery-card-image {
   line-height: 0;
 }
@@ -45,16 +139,13 @@
   object-fit: cover;
 }
 
-/* Cards without an image get a slim brand gradient band so they read as
-   part of the same grid (India, Indonesia, Ireland). */
-.gallery > ul > li.gallery-card-no-image::before {
+.gallery .gallery-list > li.gallery-card-no-image::before {
   content: "";
   display: block;
   height: 8px;
   background-image: var(--energy-gradient, linear-gradient(90deg, #00a19f 0%, #3ed8c3 100%));
 }
 
-/* Text/body panel */
 .gallery .gallery-card-body {
   flex: 1 1 auto;
   display: flex;
@@ -62,7 +153,7 @@
   padding: 24px;
 }
 
-.gallery .gallery-card-body h3 {
+.gallery .gallery-list .gallery-card-body h3 {
   margin: 0 0 12px;
   font-size: var(--heading-size-l, 24px);
   font-weight: 700;
@@ -70,26 +161,23 @@
   color: var(--link-color, #00a19f);
 }
 
-.gallery .gallery-card-body p {
+.gallery .gallery-list .gallery-card-body p {
   margin: 0 0 16px;
   font-size: var(--body-font-size-m, 18px);
   line-height: 27px;
   color: var(--text-color, #1d4477);
 }
 
-/* The description paragraph flexes so CTA links align at the card bottom */
-.gallery .gallery-card-body p:not(:has(a)) {
+.gallery .gallery-list .gallery-card-body p:not(:has(a)) {
   flex: 1 1 auto;
 }
 
-/* CTA links — RWE hotspot-panel text links (no pill buttons).
-   Source (live): "About …" = bold blue #00b1eb; "Careers …" = teal #00a19f
-   with a trailing arrow. Both are plain text links, no background/border. */
-.gallery .gallery-card-body p:has(a) {
+/* CTA links — RWE hotspot-panel text links (no pill buttons). */
+.gallery .gallery-list .gallery-card-body p:has(a) {
   margin: 0;
 }
 
-.gallery .gallery-card-body p:has(a) + p:has(a) {
+.gallery .gallery-list .gallery-card-body p:has(a) + p:has(a) {
   margin-top: 8px;
 }
 
@@ -146,16 +234,49 @@
   font-weight: inherit;
 }
 
-/* Tablet: 2 columns */
+/* ---------- Popover body (higher specificity — kept after list rules
+   so it overrides the shared .gallery-card-body treatment) ---------- */
+.gallery .gallery-popover .gallery-card-body {
+  padding: 0;
+}
+
+.gallery .gallery-popover .gallery-card-body h3 {
+  margin: 0 0 10px;
+  padding-right: 20px;
+  color: var(--brand-blue, #1d4477);
+  font-size: var(--heading-size-l, 24px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.gallery .gallery-popover .gallery-card-body p {
+  margin: 0 0 12px;
+  color: var(--text-color, #1d4477);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.gallery .gallery-popover .gallery-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Popover links keep the same treatment but at popover font-size */
+.gallery .gallery-popover .gallery-card-body a.gallery-link-about,
+.gallery .gallery-popover .gallery-card-body a.gallery-link-careers {
+  font-size: 16px;
+}
+
+/* Tablet: 2-column list */
 @media (width >= 600px) {
-  .gallery > ul {
+  .gallery .gallery-list {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Desktop: 3 columns */
+/* Desktop: 3-column list */
 @media (width >= 900px) {
-  .gallery > ul {
+  .gallery .gallery-list {
     grid-template-columns: repeat(3, 1fr);
     gap: 32px;
   }
