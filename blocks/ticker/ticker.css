@@ -232,10 +232,12 @@
 
 .ticker .ticker-slide a::after {
   content: '';
-  width: 18px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   background-color: currentcolor;
-  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16"><path d="M15 0l-1.4 1.4L18.2 6H0v2h18.2l-4.6 4.6L15 14l7-7z" fill="black"/></svg>') no-repeat center / contain;
+
+  /* Official RWE UI Kit arrow (icons/rwe-arrow-right.svg), tinted via mask */
+  mask: url('/icons/rwe-arrow-right.svg') no-repeat center / contain;
   flex: 0 0 auto;
 }
 
