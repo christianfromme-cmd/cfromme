@@ -17,10 +17,43 @@
   overflow: hidden;
   min-height: 460px;
 
-  /* fallback background behind the (unavailable) source video/image:
+  /* fallback background behind the source video/image:
      RWE dark-blue -> petrol gradient */
   background-image: linear-gradient(45deg, #1d4477 22%, #00a19f);
   background-color: #1d4477;
+}
+
+/* Background media layer: looping video with a still-image fallback behind it.
+   Sits above the gradient, below the content + impact-print motif. */
+.hero-stage-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-stage-media .hero-stage-media-fallback,
+.hero-stage-media .hero-stage-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The video paints over the fallback image when it can play. */
+.hero-stage-media .hero-stage-video {
+  z-index: 1;
+}
+
+/* Subtle scrim so the white headline panel keeps contrast over busy imagery. */
+.hero-stage-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(90deg, rgb(29 68 119 / 35%) 0%, rgb(29 68 119 / 10%) 55%, transparent 100%);
+  pointer-events: none;
 }
 
 /* RWE "impact print" fingerprint-arc motif, bottom-right (decorative;
