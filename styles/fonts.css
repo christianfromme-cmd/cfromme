@@ -2,7 +2,7 @@
 
 /* RWE Sans — self-hosted brand typeface (see ui-kit/nkStylesExtended.css).
    Family name "RWE Sans" is referenced by --heading-font-family /
-   --body-font-family in styles/brand.css. */
+   --body-font-family in styles/styles.css. */
 
 @font-face {
   font-family: "RWE Sans";
