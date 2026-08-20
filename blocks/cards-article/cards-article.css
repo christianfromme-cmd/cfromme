@@ -16,12 +16,28 @@
 
 /* Card = gradient panel, white text, sharp corners */
 .cards-article > ul > li {
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background-image: var(--energy-gradient-diagonal, linear-gradient(45deg, #1d4477 22%, #00a19f));
   color: #fff;
   transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+/* RWE "impact print" fingerprint-arc motif, bottom-right of each card
+   (decorative; matches source .impact-print-image). */
+.cards-article > ul > li::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 180px;
+  height: 180px;
+  background: url('https://www.rwe.com/-/media/RWE/Impact-Print/Impact-Print-Dark-Green-and-White.svg') no-repeat right bottom;
+  background-size: contain;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Image cards: image sits on top, gradient text panel below */
@@ -38,6 +54,8 @@
 
 /* Text/body panel */
 .cards-article .cards-article-card-body {
+  position: relative;
+  z-index: 1;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
