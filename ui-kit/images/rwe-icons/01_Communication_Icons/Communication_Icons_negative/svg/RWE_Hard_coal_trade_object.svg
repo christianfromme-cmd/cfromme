@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Icon_1_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 500 500" style="enable-background:new 0 0 500 500;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#FFFFFF;stroke-width:20;stroke-miterlimit:10;}
+	.st1{fill:#FFFFFF;stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st2{font-family:'RWESans-Bold';}
+	.st3{font-size:101.2356px;}
+	.st4{clip-path:url(#SVGID_2_);}
+	.st5{fill:none;stroke:#FFFFFF;stroke-width:20;stroke-miterlimit:60;}
+</style>
+<g>
+	<g>
+		<path class="st0" d="M405.2,99.4c-52.4,0-75.5,34.1-75.5,75.8c0,41.2,22.9,75.3,75.5,75.3c52.6,0,75.5-34.3,75.5-75.3
+			C480.6,133.6,457.8,99.4,405.2,99.4L405.2,99.4z"/>
+	</g>
+</g>
+<text transform="matrix(1.1072 0 0 1 366.0873 210.5474)" class="st1 st2 st3">€</text>
+<g>
+	<defs>
+		<path id="SVGID_1_" d="M0.2,47.9v443.9h500V47.9H0.2z M470.3,234.9c-15,16.8-37.5,25.6-64.9,25.6c-27.5,0-49.9-8.8-64.9-25.5
+			c-13.5-15-20.6-35.6-20.6-59.8c0-24.3,7.1-45.1,20.7-60.2c15-16.7,37.4-25.6,64.8-25.6c52.7,0,85.5,32.9,85.5,85.8
+			C490.9,199.2,483.7,219.9,470.3,234.9z"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	<g class="st4">
+		<line class="st5" x1="0.4" y1="222.6" x2="493.5" y2="222.6"/>
+		<polyline class="st5" points="374.4,422.5 413.1,422.5 436,222.6 		"/>
+		<polyline class="st5" points="56.5,222.6 81.4,422.5 126.7,422.5 		"/>
+		<polyline class="st5" points="38.9,222.6 56.5,188.6 91.6,179.5 95.7,142.3 137.5,135.7 161.7,99.8 200.9,105.1 218,82.2 
+			250.2,74.4 274,84.2 304.7,108.3 353,126.6 364.1,169.1 397.5,176.2 426.8,197.8 436,211.5 		"/>
+		<line class="st5" x1="211.4" y1="422.5" x2="289.1" y2="422.5"/>
+		<g>
+			<g>
+				<g>
+					<path class="st5" d="M169,387.3c-26,0-43,17.7-43,43.1c0,25.1,16.5,42.8,43,42.8c26.2,0,43-18,43-42.8
+						C212,405.3,195.1,387.3,169,387.3L169,387.3z"/>
+				</g>
+			</g>
+		</g>
+		<g>
+			<g>
+				<g>
+					<path class="st5" d="M332,387.3c-26,0-43,17.7-43,43.1c0,25.1,16.5,42.8,43,42.8c26.2,0,43-18,43-42.8
+						C375,405.3,358,387.3,332,387.3L332,387.3z"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

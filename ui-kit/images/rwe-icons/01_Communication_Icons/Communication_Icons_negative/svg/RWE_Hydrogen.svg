@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Wasserstoff" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 500 500" style="enable-background:new 0 0 500 500;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+	.st1{fill:#FFFFFF;}
+	.st2{font-family:'RWESans-Medium';}
+	.st3{font-size:221.23px;}
+	.st4{font-family:'RWESans-Bold';}
+	.st5{font-size:144.3571px;}
+	.st6{fill:none;stroke:#FFFFFF;stroke-width:20;stroke-miterlimit:10;}
+</style>
+<rect y="0" class="st0" width="500" height="500"/>
+<g>
+	<text transform="matrix(1 0 0 1 146.9612 317.4307)" class="st1 st2 st3">H</text>
+	<text transform="matrix(1 0 0 1 308.7102 364.2666)" class="st1 st4 st5">2</text>
+</g>
+<path class="st6" d="M330.6,428.8c-24.6,11.1-51.9,17.3-80.6,17.3c-108.3,0-196.1-87.8-196.1-196.1S141.7,53.9,250,53.9
+	S446.1,141.7,446.1,250"/>
+</svg>

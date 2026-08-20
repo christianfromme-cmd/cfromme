@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 20px;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="18" y="63" width="92" height="115.22"/>
+  <rect class="cls-1" x="146" y="62" width="92" height="116.22"/>
+  <rect class="cls-1" x="358.38" y="177.51" width="92" height="116.22" transform="translate(285.05 -216.93) rotate(45)"/>
+  <circle class="cls-1" cx="75.5" cy="306" r="34.5"/>
+  <circle class="cls-1" cx="204.5" cy="306" r="34.5"/>
+  <line class="cls-1" x1="0" y1="439" x2="304" y2="439"/>
+  <path class="cls-1" d="M0,215.05c1-.03,2-.05,3-.05H220c50.05,0,91,40.95,91,91h0c0,50.05-40.95,91-91,91H0"/>
+  <path class="cls-1" d="M335.79,441c18.06,0,18.06,15.89,36.1,15.89s18.05-15.89,36.11-15.89,18.05,15.89,36.1,15.89,18.06-15.89,36.11-15.89,18.06,15.89,36.1,15.89"/>
+  <path class="cls-1" d="M335.79,393c18.06,0,18.06,15.89,36.1,15.89s18.05-15.89,36.11-15.89,18.05,15.89,36.1,15.89,18.06-15.89,36.11-15.89,18.06,15.89,36.1,15.89"/>
+</svg>
