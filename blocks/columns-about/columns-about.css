@@ -1,8 +1,9 @@
 /* Block: columns-about -- "From here, we can keep the world moving – forward."
- * Two-column layout: headline (left) + career video (right).
+ * Live layout: headline full-width on top, then a row with the intro text
+ * (left) + career video (right).
  * Values extracted from https://www.rwe.com/en/rwe-careers-portal/ computed styles. */
 
-.columns-about > div {
+.columns-about {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -22,11 +23,22 @@ main .section .columns-about h2 .columns-about-highlight {
   color: var(--link-color);
 }
 
-.columns-about p {
+/* Two-column row: intro text (left) + video (right). */
+.columns-about-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.columns-about-text p {
   margin: 0 0 24px;
   color: var(--brand-blue);
   font-size: var(--body-font-size-m);
   line-height: 27px;
+}
+
+.columns-about-text p:last-child {
+  margin-bottom: 0;
 }
 
 /* video / media column -- source poster is a 3:2 landscape frame with a
@@ -45,6 +57,7 @@ main .section .columns-about h2 .columns-about-highlight {
   overflow: hidden;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .columns-about-video-col p {
   position: relative;
   z-index: 1;
@@ -87,19 +100,19 @@ main .section .columns-about h2 .columns-about-highlight {
 }
 
 @media (width >= 900px) {
-  .columns-about > div {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 24px;
-  }
-
-  .columns-about > div > div {
-    flex: 1;
-    min-width: 0;
-  }
-
   .columns-about h2 {
     font-size: 32px;
     line-height: 38px;
+  }
+
+  .columns-about-columns {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .columns-about-columns > * {
+    flex: 1;
+    min-width: 0;
   }
 }
