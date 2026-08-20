@@ -8,6 +8,38 @@ This project is based on the https://github.com/adobe/aem-boilerplate/ project a
 
 The repository provides the basic structure, blocks, and configuration needed to run a complete site with `*.aem.live` as the backend.
 
+### RWE UI Kit — source assets (always prefer these)
+
+The `ui-kit/` directory is the RWE brand UI Kit (Pattern Lab export): component
+designs (`.hbs` / `.markup-only.html` / `.rendered.html`), the RWE stylesheets
+(`nkStyles*.css`, `plStyles.css`), and — most importantly — the official brand
+assets under `ui-kit/images/`:
+- `ui-kit/images/rwe-icons/` — ~1000 official RWE brand SVG icons, organised by
+  set (`01_Communication_Icons/...positive|negative`, `04_Special_Characters_Energyfields/{RWE Blue,Energy Dark Green,Energy Light Green,White}`, etc.). Positive = dark icon for light backgrounds; negative = white icon for dark backgrounds.
+- `ui-kit/images/` also holds the RWE logos (`rwe_logo.svg`, `rwe_logo-white.svg`),
+  the ticker icon (`kurznachrichtenmodul-info.svg`), and sample/placeholder photos.
+
+**Policy — when a block needs an icon, logo, or brand graphic:**
+1. First look in `ui-kit/images/` (search `rwe-icons/` by name, e.g. `arrow_right`,
+   `RWE_International_world`). If a matching official asset exists, copy it into the
+   project (`icons/<name>.svg` for icons) and reference the local same-origin path —
+   never hot-link `www.rwe.com/-/media/...`. Local assets are faster, cache-safe, and
+   don't break under the image-optimization pipeline.
+2. Pick the right colour variant for the background (positive vs negative / Blue vs
+   Energy Green vs White) and check contrast (WCAG AA) — deviate from the source
+   colour if the source itself fails contrast (see the map-marker decision in
+   `migration-work/migration-plan.md`).
+3. Only if the kit has no matching asset, fall back to an external RWE URL or an
+   inline SVG, and note it in the migration plan. Known gaps NOT in the kit: the
+   Impact-Print fingerprint motif (`Impact-Print-*.svg`) and the Global-impact world
+   map (`TIC01-globale-karte.jpg`) — these remain external by necessity.
+
+Author-supplied page photos (country/card/ticker images) are DA-authored content, not
+block assets, and are not sourced from the kit.
+
+`ui-kit/` is excluded from linting (`.eslintignore`, `.stylelintignore`) and from
+serving/deploy (`.hlxignore`); it is a design reference only.
+
 ### Key Technologies
 - Edge Delivery Services for AEM Sites (documentation at https://www.aem.live/ – search with `site:www.aem.live` to restrict web search results)
 - Vanilla JavaScript (ES6+), no transpiling, no build steps
