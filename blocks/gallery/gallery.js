@@ -112,11 +112,13 @@ export default function decorate(block) {
   galleryId += 1;
   const rows = [...block.children];
 
-  // Build the country list. It stays in the DOM as the data source for the
-  // popovers and as a screen-reader-accessible alternative to the visual map,
-  // but is visually hidden — details are shown only on marker click.
+  // Build the country list. On phones (<600px) it is the visible experience
+  // (the map's markers overlap and can't be tapped that small). On
+  // tablet/desktop it stays in the DOM as the popover data source and a
+  // screen-reader-accessible alternative, but is visually hidden — details
+  // are shown only on marker click. Visibility is handled in CSS.
   const list = document.createElement('ul');
-  list.className = 'gallery-list gallery-list-visually-hidden';
+  list.className = 'gallery-list';
   const entries = rows.map((row) => buildListItem(row));
   entries.forEach((li) => list.append(li));
 
