@@ -83,22 +83,24 @@
   margin-bottom: 0;
 }
 
-/* CTA — solid teal affordance matching source .tea01r--affordance (8px 16px, radius 5px) */
+/* CTA — outlined affordance matching source .tea01r--affordance:
+   2px teal border, transparent fill, teal text, 8px 24px, radius 5px. */
 .cards-article .cards-article-card-body p:last-child a:any-link {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 8px 24px;
+  border: 2px solid var(--energy-green-dark, #00a19f);
   border-radius: 5px;
-  background-color: var(--energy-green-dark, #00a19f);
-  color: #fff;
+  background-color: transparent;
+  color: var(--energy-green-dark, #00a19f);
   font-size: var(--body-font-size-m, 18px);
   font-weight: 400;
   text-decoration: none;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .cards-article .cards-article-card-body p:last-child a:hover,
 .cards-article .cards-article-card-body p:last-child a:focus-visible {
-  background-color: var(--brand-blue, #1d4477);
+  background-color: var(--energy-green-dark, #00a19f);
   color: #fff;
   text-decoration: none;
 }
