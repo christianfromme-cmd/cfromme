@@ -21,6 +21,7 @@
 
 /* Media cell (video/picture) — full-bleed background media. */
 .columns-promo-media {
+  position: relative;
   order: 0;
   width: 100%;
   overflow: hidden;
@@ -40,6 +41,18 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Fallback still sits behind the video; the video paints over it when it can
+   play, otherwise the branded image shows instead of the plain gradient. */
+.columns-promo-media .columns-promo-media-fallback {
+  position: absolute;
+  inset: 0;
+}
+
+.columns-promo-media .columns-promo-video {
+  position: relative;
+  z-index: 1;
 }
 
 /* Text panel — RWE blue -> petrol gradient, white text. */
