@@ -1,0 +1,95 @@
+<div data-tpl="tic01"
+     class="rwe-tick01">
+
+    {{#if tic01Headline}}
+        <h2 class="headline">{{tic01Headline}}</h2>
+    {{/if}}
+
+    <div data-tpl="mediaContainer"
+         class="{{#if tic01Image}}{{#if tic01IsZoomable}}zoomable{{/if}}{{/if}}">
+        {{#if tic01HasVideo}}
+            
+            <div data-tpl="video"
+                 data-module="video"
+                 data-module-config=""
+                 data-name="{{tic01VideoName}}"
+                 class="videoplayer-container {{tic01VideoplayerClass}}">
+                <figure>
+                    <div class="videoplayer-content">
+                        <video preload="none"
+                               poster="{{tic01PosterImageUrl}}"
+                               data-url="{{tic01VideoUrlHigh}}"
+                               data-item-id="autogenerate-{{tic01VideoId}}"
+                               data-item-name="{{tic01VideoName}}"
+                               data-language="en"
+                               role="application"
+                               class="video-js videoplayer {{#if tic01PosterImageUrl}}posterimg{{/if}} {{#if tic01IsFullScreen}}vjs-is-fullscreen{{/if}}"
+                               controls
+                               style="position: relative;">
+                            
+                            <source src="{{tic01VideoUrlHigh}}"
+                                    type="video/mp4" />
+                            <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to
+                                a web browser that supports HTML5 video</p>
+                        </video>
+                    </div>
+                </figure>
+            </div>
+        {{/if}}
+
+        {{#if tic01HasImage}}
+            
+            {{#if tic01Image}}
+                <figure class="image image-semantic">
+                    <picture class="rwe-tick01__picture js-pinchzoom"
+                             data-mobile-zoom-help-text="Zoom with double touch and gestures">
+                        <!--[if IE 9]><video style="display: none;"><![endif]-->
+                        <source srcset="{{tic01Image}}"
+                                media="( min-width: 1280px )"><img src="{{tic01Image}}"
+                             alt="RWE Image"
+                             aria-describedby="uniqueId">
+                        <!--[if IE 9]></video><![endif]-->
+                    </picture>
+                    {{#if tic01ImageCaption}}
+                        <figcaption class="image-caption"
+                                    id="uniqueId">{{tic01ImageCaption}}</figcaption>
+                    {{/if}}
+                </figure>
+            {{/if}}
+            {{#if tic01IsImageDownloadable}}
+                {{#> molecules-ll01 isDemo=false}}
+                    {{> molecules-ll01-item-helper ll01ItemLinkType="link--download" ll01ItemText="Download (optional)" ll01ItemDataType="Media" ll01ItemSetRel=true ll01ItemTarget="_blank" ll01ItemHref="/images/sample-image-01.png"}}
+                {{/molecules-ll01}}
+            {{/if}}
+        {{/if}}
+    </div>
+
+    {{#if tic01Subheadline}}
+        <h3 class="subheadline video-caption">{{tic01Subheadline}}</h3>
+    {{/if}}
+
+    {{#if tic01Content}}
+        <div class="content">
+            {{{tic01Content}}}
+        </div>
+    {{/if}}
+
+    {{#if tic01IsContentExpandable}}
+        <div class="content-extended">
+            {{{tic01ContentExtended}}}
+        </div>
+        <div class="content-extended-arrow">
+            <div class="extended-arrow--open">
+                {{#if tic01ExpandTriggerText}}{{tic01ExpandTriggerText}}{{else}}Show less{{/if}}
+            </div>
+            <div class="extended-arrow--close">
+                {{#if tic01CollapseTriggerText}}{{tic01CollapseTriggerText}}{{else}}Show more{{/if}}
+            </div>
+        </div>
+    {{/if}}
+
+    {{#if tic01Link}}
+        {{> molecules-cta01 cta01CssAlignment="cta01--left" }}
+    {{/if}}
+
+</div>

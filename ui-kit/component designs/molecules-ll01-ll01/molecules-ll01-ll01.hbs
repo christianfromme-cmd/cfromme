@@ -1,0 +1,23 @@
+
+<div data-tpl="ll01"
+     class="{{ll01CssClasses}}">
+    {{#if ll01HasHeader}}
+        <header>
+            {{#if ll01Headline}}
+                <h3 class="headline">{{ll01Headline}}</h3>
+            {{/if}}
+            {{#if ll01SubHeadline}}
+                <h3 class="headline--light">{{ll01SubHeadline}}</h3>
+            {{/if}}
+        </header>
+    {{/if}}
+    <ul>
+        {{#if ll01IsDemo}}
+            {{> molecules-ll01-item-helper ll01ItemLinkType="link--download" ll01ItemText="Download Link" ll01ItemDataType="Media" ll01ItemSetRel=true ll01ItemTarget="_blank"}}
+            {{> molecules-ll01-item-helper ll01ItemLinkType="link--internal" ll01ItemText="Internal Link" ll01ItemDataType="Internal" ll01ItemTarget="|Custom"}}
+            {{> molecules-ll01-item-helper ll01ItemLinkType="link--external" ll01ItemText="External Link" ll01ItemDataType="External" ll01ItemSetRel=true ll01ItemTarget="_blank"}}
+        {{else}}
+            {{> @partial-block }}
+        {{/if}}
+    </ul>
+</div>

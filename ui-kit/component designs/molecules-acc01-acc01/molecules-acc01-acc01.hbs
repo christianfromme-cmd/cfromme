@@ -1,0 +1,19 @@
+<section data-tpl="acc01"
+         class="{{acc01CssClasses}}">
+
+    {{#if acc01Headline}}
+        <h2>{{acc01Headline}}</h2>
+    {{/if}}
+    {{#if acc01Subheadline}}
+        <h3>{{acc01Subheadline}}</h3>
+    {{/if}}
+    <{{#if acc01IsOrdered}}ol{{else}}ul{{/if}}>
+        {{#if acc01IsDemo}}
+            {{> molecules-acc01Item-hidden acc01ItemNumber="1"}}
+            {{> molecules-acc01Item-hidden acc01ItemNumber="2"}}
+            {{> molecules-acc01Item-hidden acc01ItemNumber="3"}}
+        {{else}}
+            {{> @partial-block }}
+        {{/if}}
+    </{{#if acc01IsOrdered}}ol{{else}}ul{{/if}}>
+</section>

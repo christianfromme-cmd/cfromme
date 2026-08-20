@@ -1,0 +1,111 @@
+<article data-tpl="tea01r"
+         class="teaser-width {{#if tea01rImagePositionRight}}tea01--image-right{{else}}tea01--image-left{{/if}}">
+    
+    <a class="link"
+       target="|Custom"
+       href="{{#if tea01rHref}}{{tea01rHref}}{{else}}#{{/if}}">
+
+        <div class="media-container {{#if tea01rHasVideo}}video-container{{else}}image-container{{/if}}">
+            {{#if tea01rHasVideo}}
+                <video class="tear01r__video"
+                       autoplay
+                       muted
+                       loop>
+                    <source src="{{tea01rWebMVideoSrc}}">
+                    <source src="{{tea01rMp4VideoSrc}}">
+                </video>
+            {{/if}}
+
+            {{#if tea01rHasImage}}
+                {{#if tea01rTeaserImage}}
+                    <!-- TODO: Phase 2, in Absprache mit Simon müssen die Media-Queries geprüft werden -->
+                    <style type="text/css"
+                           data-tpl="inline-style"
+                           data-for="responsive-assets"
+                           data-image-id="autogenerate-{{tea01rUniqueID}}">
+                        @media (max-width: 479px) {
+                            [data-image-id='autogenerate-{{ tea01rUniqueID}}'].image--loaded>div {
+                                background-image: url('{{#if  tea01rTeaserImage}}{{ tea01rTeaserImage}}{{else}}../../images/sample-image-01.png{{/if}}');
+                            }
+                        }
+
+                        @media (max-width: 479px) AND (min-resolution: 2dppx) {
+                            [data-image-id='autogenerate-{{ tea01rUniqueID}}'].image--loaded>div {
+                                background-image: url('{{#if  tea01rTeaserImage}}{{ tea01rTeaserImage}}{{else}}../../images/sample-image-01.png{{/if}}');
+                            }
+                        }
+
+                        @media (min-width: 480px) AND (max-width: 799px) {
+                            [data-image-id='autogenerate-{{ tea01rUniqueID}}'].image--loaded>div {
+                                background-image: url('{{#if  tea01rTeaserImage}}{{ tea01rTeaserImage}}{{else}}../../images/sample-image-01.png{{/if}}');
+                            }
+                        }
+
+                        @media (min-width: 480px) AND (max-width: 799px) AND (min-resolution: 2dppx) {
+                            [data-image-id='autogenerate-{{ tea01rUniqueID}}'].image--loaded>div {
+                                background-image: url('{{#if  tea01rTeaserImage}}{{ tea01rTeaserImage}}{{else}}../../images/sample-image-01.png{{/if}}');
+                            }
+                        }
+
+                        @media (min-width: 800px) AND (max-width: 1279px) {
+                            [data-image-id='autogenerate-{{ tea01rUniqueID}}'].image--loaded>div {
+                                background-image: url('{{#if  tea01rTeaserImage}}{{ tea01rTeaserImage}}{{else}}../../images/sample-image-01.png{{/if}}');
+                            }
+                        }
+
+                        @media (min-width: 800px) AND (max-width: 1279px) AND (min-resolution: 2dppx) {
+                            [data-image-id='autogenerate-{{ tea01rUniqueID}}'].image--loaded>div {
+                                background-image: url('{{#if  tea01rTeaserImage}}{{ tea01rTeaserImage}}{{else}}../../images/sample-image-01.png{{/if}}');
+                            }
+                        }
+
+                        @media (min-width: 1280px) {
+                            [data-image-id='autogenerate-{{ tea01rUniqueID}}'].image--loaded>div {
+                                background-image: url('{{#if  tea01rTeaserImage}}{{ tea01rTeaserImage}}{{else}}../../images/sample-image-01.png{{/if}}');
+                            }
+                        }
+
+                        @media (min-width: 1280px) AND (min-resolution: 2dppx) {
+                            [data-image-id='autogenerate-{{ tea01rUniqueID}}'].image--loaded>div {
+                                background-image: url('{{#if  tea01rTeaserImage}}{{ tea01rTeaserImage}}{{else}}../../images/sample-image-01.png{{/if}}');
+                            }
+                        }
+                    </style>
+                    <!-- TODO: In Absprache mit Simon muss die Verwendung von der lazy-load Klassen geprüft werden -->
+                    <div data-image-id="autogenerate-{{ tea01rUniqueID}}"
+                         class="image image-decorative image--lazy-loaded image--loaded media-align-- media-fill--out">
+                        <div aria-label="RWE Image"
+                             aria-describedby="aria-autogenerate-{{ tea01rUniqueID}}"
+                             role="img"></div>
+                    </div>
+
+                    <!-- TODO: In Absprache mit Simon wird der Teil nicht genutzt -->
+                    {{#if tea01rImageCaption}}
+                        <p class="image-caption">{{tea01rImageCaption}}</p>
+                    {{/if}}
+                {{else}}
+                    <div class="tea01-default"></div>
+                {{/if}}
+            {{/if}}
+        </div>
+
+        <div class="header-wrapper">
+            <header
+                    class="{{#if tea01rColor}}{{tea01rColor}}{{else}}color-teaser-1{{/if}} {{#if tea01rImagePositionRight}}left-to-right-animation{{else}}right-to-left-animation{{/if}}">
+                <div class="content">
+                    <h3 class="headline headline--bold">{{#if tea01rHeadline}}{{tea01rHeadline}}{{else}}Headline{{/if}}
+                    </h3>
+
+                    <p>{{#if tea01rSubheadline}}{{tea01rSubheadline}}{{else}}Subheadline{{/if}}</p>
+                </div>
+                
+                <div
+                     class="btn {{#if tea01rCtaClass }}{{tea01rCtaClass}}{{else}}color-cta--gradient-green-reverse{{/if}} tea01r--affordance">
+                    <span>{{#if tea01rAffordance}}{{tea01rAffordance}}{{else}}Read more{{/if}}</span>
+                </div>
+            </header>
+        </div>
+
+    </a>
+
+</article>

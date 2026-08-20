@@ -1,0 +1,8 @@
+<div data-tpl="cta01"
+     {{#if
+     cta01CssAlignment}}class="{{cta01CssAlignment}}"
+     {{/if}}>
+    <a class="{{#if cta01CssColor}}{{cta01CssColor}}{{else}}color-cta--gradient-green{{/if}} btn {{#if cta01IsFullWidth}}btn--full-width{{/if}}"
+       href="#"
+       title="{{#if cta01Text}}{{cta01Text}}{{else}}Linktext{{/if}}">{{#if cta01Text}}{{cta01Text}}{{else}}Linktext{{/if}}</a>
+</div>

@@ -1,0 +1,28 @@
+{{#if tea01rIsDemo}}
+    {{#if tea01rGridWidthFull}}
+        <section class="teaser-grid--full-width">
+            <div class="container-fluid">
+                <div class="row">
+                    {{> molecules-tea01r-hidden}}
+                </div>
+            </div>
+        </section>
+    {{/if}}
+    {{#if tea01rWidthFull}}
+        {{#> atoms-bas02 bas02IsDemo=true}}
+            {{> molecules-tea01r-hidden}}
+        {{/atoms-bas02}}
+    {{/if}}
+    {{#if tea01rWidth50}}
+        {{#> atoms-bas03 bas03IsDemo=true}}
+            {{> molecules-tea01r-hidden}}
+        {{/atoms-bas03}}
+    {{/if}}
+    {{#if tea01rWidth25}}
+        {{#> atoms-bas06 bas06IsDemo=true}}
+            {{> molecules-tea01r-hidden}}
+        {{/atoms-bas06}}
+    {{/if}}
+{{else}}
+    {{> molecules-tea01r-hidden}}
+{{/if}}

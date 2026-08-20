@@ -1,0 +1,13 @@
+<li>
+    <a class="link {{ll01ItemLinkType}}"
+       href="{{#if ll01ItemHref}}{{ll01ItemHref}}{{else}}#{{/if}}"
+       {{#if
+       ll01ItemTarget}}target="{{ll01ItemTarget}}"
+       {{/if}}
+       {{#if
+       ll01ItemSetRel}}rel="noopener noreferrer"
+       {{/if}}
+       {{#if
+       ll01ItemDataType}}data-link-type="{{ll01ItemDataType}}"
+       {{/if}}>{{ll01ItemText}}</a>
+</li>

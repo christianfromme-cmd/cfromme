@@ -1,0 +1,53 @@
+
+<li class="accordion-item {{#if acc01Expanded}}expanded{{else}}{{/if}} {{acc01CssClasses}}"
+    data-event-cd="{{#if acc01ItemDataEventCd}}{{acc01ItemDataEventCd}}{{else}}Accordeon Item{{/if}} {{acc01ItemNumber}}"
+    data-event-action=""
+    data-event-label="{{#if acc01ItemDataEventLabel}}{{acc01ItemDataEventLabel}}{{else}}Headline ACC01 Element{{/if}} {{acc01ItemNumber}}">
+    <section>
+        <div class="accordion-item__wrapper">
+            <h3 class="subheadline accordion-item__headline">
+
+                <button type="button"
+                        class="accordion-item__button"
+                        aria-expanded="{{#if acc01Expanded}}true{{else}}false{{/if}}">
+                    <span class="
+                        accordion-item__button-label">
+                        {{#if acc01ItemHeadline}}{{acc01ItemHeadline}}{{else}}Headline Item{{/if}}
+                    </span>
+                </button>
+
+
+            </h3>
+        </div>
+
+        <article class="accordion-item__content">
+            {{#if acc01IsDemo}}
+                <section data-tpl="grid-bas-02"
+                         class=" ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="grid-content col-sm-12">
+                                <div data-tpl="tic01"
+                                     class="rwe-tick01">
+                                    <h2 class="headline">
+                                        <span class="color__font--rwe-blue">TIC01 Headline</span>
+                                    </h2>
+                                    <div data-tpl="mediaContainer"
+                                         class=" ">
+                                    </div>
+                                    <h3 class="subheadline video-caption">TIC01 Subheadline</h3>
+                                    <div class="content">
+                                        <p>TIC01 description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--{{> atoms-colHelper colHelperIsDemoItem=true colHelperGridClasses="col-sm-12" colHelperDemoItemName="demo content"}}-->
+            {{else}}
+                {{> @partial-block }}
+            {{/if}}
+        </article>
+    </section>
+</li>
