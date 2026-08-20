@@ -27,8 +27,11 @@
   pointer-events: none;
 }
 
-/* Marker = teal circle with a white "+" (fixed tap-target size so it stays
-   usable as the map scales down). */
+/* Marker = light-green circle with a "+" (fixed tap-target size so it stays
+   usable as the map scales down). The source uses the lighter energy-green
+   (#3ed8c3) fill; we pair it with a dark-blue "+" instead of the source's
+   white glyph so the marker meets WCAG AA contrast (5.5:1 vs the source's
+   1.8:1). */
 .gallery .gallery-hotspot {
   position: absolute;
   width: 30px;
@@ -37,9 +40,9 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background-color: var(--energy-green-dark, #00a19f);
+  background-color: var(--energy-green, #3ed8c3);
   box-shadow: 0 2px 6px rgb(29 68 119 / 30%);
-  color: #fff;
+  color: var(--brand-blue, #1d4477);
   cursor: pointer;
   pointer-events: auto;
   transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out;
@@ -49,7 +52,7 @@
   content: "+";
   display: block;
   font-size: 22px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 30px;
   text-align: center;
 }
@@ -58,7 +61,8 @@
 .gallery .gallery-hotspot:focus-visible,
 .gallery .gallery-hotspot.is-active {
   transform: scale(1.15);
-  background-color: var(--brand-blue, #1d4477);
+  background-color: var(--energy-green-dark, #00a19f);
+  color: #fff;
   outline: none;
 }
 
