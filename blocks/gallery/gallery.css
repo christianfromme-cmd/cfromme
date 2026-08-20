@@ -5,7 +5,7 @@
  * with clickable country hotspots. That bespoke map widget has no reusable
  * source, so the imported content is rendered as a responsive grid of country
  * cards (image + country name + description + CTA links). Styling therefore
- * follows the RWE brand system (see styles/brand.css) rather than extracted
+ * follows the RWE brand system (see styles/styles.css) rather than extracted
  * computed styles from the source map.
  */
 
