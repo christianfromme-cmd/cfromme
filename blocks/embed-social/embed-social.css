@@ -1,67 +1,212 @@
 /*
- * Embed Social (placeholder)
- * Clean, centered intro standing in for the consent-gated RWE social feed.
- * Teal heading + brand-blue body text (from brand tokens), with a subtle
- * bordered/tinted panel suggesting where the live feed would render.
+ * Embed Social — "RWE @ Social Media"
+ * Author-managed masonry grid of social post cards, matching the live rwe.com
+ * layout: centered heading + intro, then LinkedIn-style cards (RWE avatar +
+ * name, network icon, post text with fade, optional image/video media, and a
+ * relative-time + external-link footer).
  */
 
 .embed-social {
-  max-width: 800px;
+  max-width: var(--content-max-width);
   margin: 0 auto;
+}
+
+/* Intro --------------------------------------------------------------------- */
+.embed-social .embed-social-intro {
+  margin: 0 auto 32px;
   text-align: center;
 }
 
-.embed-social .embed-social-intro {
-  margin: 0 auto;
-}
-
 .embed-social .embed-social-intro h2 {
-  margin-top: 0;
-  color: var(--link-color); /* RWE petrol/teal */
+  margin: 0;
+  color: var(--brand-blue);
+  font-size: var(--heading-font-size-xl);
 }
 
 .embed-social .embed-social-intro p {
   margin: 0.5em auto 0;
-  max-width: 640px;
-  color: var(--text-color); /* RWE brand blue */
+  max-width: 720px;
+  color: var(--brand-blue);
   font-size: var(--body-font-size-m);
   line-height: 1.5;
 }
 
-/* Placeholder panel — where the live consent-gated feed would render */
-.embed-social .embed-social-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 28px;
-  padding: 40px 24px;
-  border: 1px dashed color-mix(in srgb, var(--link-color) 45%, transparent);
-  border-radius: 8px;
-  background-color: color-mix(in srgb, var(--energy-green) 8%, var(--background-color));
+/* Masonry grid (CSS columns) ------------------------------------------------ */
+.embed-social .embed-social-grid {
+  column-gap: 24px;
+  column-count: 1;
 }
 
-.embed-social .embed-social-panel-icon {
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--energy-gradient);
-  opacity: 0.85;
-}
-
-.embed-social .embed-social-panel-note {
-  margin: 0;
-  max-width: 420px;
-  color: color-mix(in srgb, var(--text-color) 70%, transparent);
-  font-size: var(--body-font-size-s);
-  line-height: 1.45;
+@media (width >= 600px) {
+  .embed-social .embed-social-grid {
+    column-count: 2;
+  }
 }
 
 @media (width >= 900px) {
-  .embed-social .embed-social-panel {
-    margin-top: 36px;
-    padding: 56px 32px;
+  .embed-social .embed-social-grid {
+    column-count: 3;
   }
+}
+
+/* Card ---------------------------------------------------------------------- */
+.embed-social .embed-social-card {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 24px;
+  border: 1px solid #e3e3e0;
+  border-radius: 2px;
+  background: var(--background-color);
+  break-inside: avoid;
+  overflow: hidden;
+}
+
+/* Header: avatar + name + network icon */
+.embed-social .embed-social-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 8px;
+}
+
+.embed-social .embed-social-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.embed-social .embed-social-avatar {
+  display: block;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  padding: 7px;
+  border-radius: 50%;
+  background: var(--brand-blue);
+}
+
+.embed-social .embed-social-account-name {
+  color: var(--brand-blue);
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+}
+
+.embed-social .embed-social-network {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+/* Media: image or video with play overlay */
+.embed-social .embed-social-card-media {
+  position: relative;
+  margin: 0;
+  line-height: 0;
+}
+
+.embed-social .embed-social-card-media picture,
+.embed-social .embed-social-card-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.embed-social .embed-social-media-link {
+  display: block;
+  position: relative;
+}
+
+.embed-social .embed-social-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 85%);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+}
+
+.embed-social .embed-social-play img {
+  width: 26px;
+  height: 26px;
+  margin-left: 3px; /* optically center the triangle */
+}
+
+/* Body: post text with a soft fade + "show more" affordance */
+.embed-social .embed-social-card-body {
+  position: relative;
+  padding: 12px 16px 4px;
+  max-height: 8.4em;
+  overflow: hidden;
+  color: var(--brand-blue);
+  font-size: var(--body-font-size-s);
+  line-height: 1.4;
+}
+
+.embed-social .embed-social-card-body::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2.4em;
+  background: linear-gradient(rgb(255 255 255 / 0%), var(--background-color));
+}
+
+.embed-social .embed-social-card-body p {
+  margin: 0 0 0.5em;
+}
+
+.embed-social .embed-social-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.embed-social .embed-social-card-body a {
+  color: var(--link-color);
+}
+
+/* Footer: relative time + external-link */
+.embed-social .embed-social-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 16px;
+}
+
+.embed-social .embed-social-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: color-mix(in srgb, var(--brand-blue) 65%, transparent);
+  font-size: var(--body-font-size-xs);
+}
+
+.embed-social .embed-social-time img {
+  display: block;
+  width: 15px;
+  height: 15px;
+  opacity: 0.75;
+}
+
+.embed-social .embed-social-extern {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.75;
+}
+
+.embed-social .embed-social-extern img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.embed-social .embed-social-extern:hover {
+  opacity: 1;
+}
+
+/* Live variant: consent-gated feed mount point ------------------------------ */
+.embed-social.live .embed-social-feed:empty {
+  display: none;
 }

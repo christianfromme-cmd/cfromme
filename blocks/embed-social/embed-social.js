@@ -1,43 +1,191 @@
 /*
- * Embed Social (placeholder)
+ * Embed Social — "RWE @ Social Media"
  * -----------------------------------------------------------------------------
- * The original "RWE @ Social Media" area on rwe.com is a consent-gated social
- * media feed (Flockler) that only renders after the visitor activates "comfort
- * cookies". That third-party integration has no UI Kit source and is not being
- * rebuilt here. This block renders a tasteful, centered intro (heading + copy)
- * with a subtle bordered/tinted panel indicating where the live feed would
- * appear once the consent-management integration is wired up.
+ * Rebuilds the live rwe.com social-media area as an author-managed masonry grid
+ * of social post cards (matching the live Flockler layout: RWE avatar + name,
+ * network icon, post text with "show more", optional image/video media, and a
+ * relative-time + external-link footer).
+ *
+ * Authoring contract (div-grid rows):
+ *   Row 1  → intro: a heading (h2) + one or more paragraphs of copy.
+ *   Row 2+ → one post card each. A card cell contains:
+ *              - optional <picture> (the post media). Wrap it in an <a> to mark
+ *                it as a video — a circular play overlay is added.
+ *              - the post text (paragraphs / rich text).
+ *              - a final link whose TEXT is the relative time ("1 wk. ago") and
+ *                whose HREF is the external post URL → becomes the card footer.
+ *
+ * Variants:
+ *   (default)  → render the authored cards.
+ *   "live"     → additionally mount a Flockler feed container, keeping the
+ *                authored cards as the no-consent fallback. The live feed itself
+ *                is wired by the site's consent-management layer.
  */
+
+const LINKEDIN_ICON = '<img class="embed-social-network" src="/icons/rwe-social-linkedin-blue.svg" alt="LinkedIn" loading="lazy" width="24" height="24">';
+const RWE_AVATAR = '<img class="embed-social-avatar" src="/icons/rwe-logo.svg" alt="" aria-hidden="true" loading="lazy">';
+const TIME_ICON = '<img src="/icons/rwe-time.svg" alt="" aria-hidden="true" loading="lazy" width="16" height="16">';
+const EXTERN_ICON = '<img src="/icons/rwe-extern.svg" alt="" aria-hidden="true" loading="lazy" width="14" height="14">';
+
+/**
+ * Returns the first row IF it looks like the intro (has a heading, no media).
+ * @param {Element} block The block element
+ * @returns {Element|null} the intro row, if present
+ */
+function extractIntro(block) {
+  const firstRow = block.querySelector(':scope > div');
+  if (!firstRow) return null;
+  if (firstRow.querySelector('h1, h2, h3, h4, h5, h6') && !firstRow.querySelector('picture')) {
+    return firstRow;
+  }
+  return null;
+}
+
+/**
+ * Builds the card header (RWE avatar + name + network icon).
+ * @returns {Element} the header element
+ */
+function buildHeader() {
+  const header = document.createElement('div');
+  header.className = 'embed-social-card-header';
+  header.innerHTML = `<span class="embed-social-account">${RWE_AVATAR}<span class="embed-social-account-name">RWE</span></span>${LINKEDIN_ICON}`;
+  return header;
+}
+
+/**
+ * Builds the media area from the cell's first <picture>, if any, and removes it
+ * from the cell. A picture wrapped in a link is treated as a video (play overlay).
+ * @param {Element} cell The card cell
+ * @returns {Element|null} the media element, or null when there is no media
+ */
+function buildMedia(cell) {
+  const picture = cell.querySelector('picture');
+  if (!picture) return null;
+
+  const link = picture.closest('a');
+  const media = document.createElement('div');
+  media.className = 'embed-social-card-media';
+
+  if (link) {
+    media.classList.add('is-video');
+    link.classList.add('embed-social-media-link');
+    link.setAttribute('aria-label', 'Play video');
+    const overlay = document.createElement('span');
+    overlay.className = 'embed-social-play';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML = '<img src="/icons/rwe-play.svg" alt="" width="28" height="28">';
+    link.append(overlay);
+    media.append(link);
+  } else {
+    media.append(picture);
+  }
+
+  // Drop the now-consumed media (and any emptied wrapping paragraph) from the cell.
+  const wrapper = (link || picture).closest('p');
+  if (wrapper && !wrapper.textContent.trim()) wrapper.remove();
+  return media;
+}
+
+/**
+ * Builds the footer (relative time + external-link icon) from the cell's last
+ * link, and removes that link from the cell.
+ * @param {Element} cell The card cell
+ * @returns {Element|null} the footer element, or null when there is no footer link
+ */
+function buildFooter(cell) {
+  const links = [...cell.querySelectorAll('a')];
+  const footerLink = links[links.length - 1];
+  if (!footerLink) return null;
+
+  const timeText = footerLink.textContent.trim();
+  const href = footerLink.getAttribute('href');
+
+  const footer = document.createElement('div');
+  footer.className = 'embed-social-card-footer';
+
+  const time = document.createElement('span');
+  time.className = 'embed-social-time';
+  time.innerHTML = `${TIME_ICON}<span>${timeText}</span>`;
+  footer.append(time);
+
+  if (href && href !== '#') {
+    const ext = document.createElement('a');
+    ext.className = 'embed-social-extern';
+    ext.href = href;
+    ext.target = '_blank';
+    ext.rel = 'noopener noreferrer';
+    ext.setAttribute('aria-label', 'View post on LinkedIn');
+    ext.innerHTML = EXTERN_ICON;
+    footer.append(ext);
+  }
+
+  const wrap = footerLink.closest('p');
+  footerLink.remove();
+  if (wrap && !wrap.textContent.trim() && !wrap.querySelector('img, picture')) wrap.remove();
+  return footer;
+}
+
+/**
+ * Builds one post card from an authored row.
+ * @param {Element} row The authored card row
+ * @returns {Element} the decorated card article
+ */
+function buildCard(row) {
+  const cell = row.querySelector(':scope > div') || row;
+
+  const card = document.createElement('article');
+  card.className = 'embed-social-card';
+  card.append(buildHeader());
+
+  const media = buildMedia(cell);
+  if (media) card.append(media);
+
+  const footer = buildFooter(cell);
+
+  const body = document.createElement('div');
+  body.className = 'embed-social-card-body';
+  body.append(...cell.childNodes);
+  if (body.textContent.trim()) card.append(body);
+
+  if (footer) card.append(footer);
+  return card;
+}
 
 /**
  * loads and decorates the block
  * @param {Element} block The block element
  */
 export default function decorate(block) {
-  // The authored structure is a single cell containing a heading and copy.
-  const cell = block.querySelector(':scope > div > div') || block;
+  const isLive = block.classList.contains('live');
+  const rows = [...block.querySelectorAll(':scope > div')];
 
+  const introRow = extractIntro(block);
   const intro = document.createElement('div');
   intro.className = 'embed-social-intro';
-  // Move the authored heading + copy into the intro wrapper.
-  intro.append(...cell.childNodes);
+  if (introRow) {
+    intro.append(...introRow.childNodes);
+    introRow.remove();
+  }
 
-  // Placeholder panel standing in for the consent-gated live feed.
-  const panel = document.createElement('div');
-  panel.className = 'embed-social-panel';
-  panel.setAttribute('role', 'note');
-  panel.setAttribute('aria-label', 'Social media feed placeholder');
-
-  const icon = document.createElement('span');
-  icon.className = 'embed-social-panel-icon';
-  icon.setAttribute('aria-hidden', 'true');
-
-  const note = document.createElement('p');
-  note.className = 'embed-social-panel-note';
-  note.textContent = 'Our latest social posts appear here once you accept comfort cookies.';
-
-  panel.append(icon, note);
+  const cardRows = rows.filter((r) => r !== introRow);
+  const grid = document.createElement('div');
+  grid.className = 'embed-social-grid';
+  cardRows.forEach((row) => grid.append(buildCard(row)));
 
   block.textContent = '';
-  block.append(intro, panel);
+  if (intro.childNodes.length) block.append(intro);
+
+  if (isLive) {
+    // Mount point for the consent-gated Flockler feed. The site's consent layer
+    // populates this once "comfort cookies" are accepted; the authored cards
+    // below serve as the no-consent fallback view.
+    const mount = document.createElement('div');
+    mount.className = 'embed-social-feed';
+    mount.dataset.flocklerEmbed = 'rwe-careers';
+    mount.setAttribute('role', 'note');
+    mount.setAttribute('aria-label', 'Live social media feed');
+    block.append(mount);
+  }
+
+  block.append(grid);
 }
