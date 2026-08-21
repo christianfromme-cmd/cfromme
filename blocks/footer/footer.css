@@ -1,10 +1,6 @@
 /* RWE footer — dark-blue, social/contact row, 3 link columns, legal + copyright.
- * Decorated structure (fragment -> footer.js):
- *   footer > .footer(block) > div > .section (x3)
- *     section 1 (.default-content-wrapper): h2 + social <p> + "Contact us" <p>
- *     section 2: three raw <div> column cells (Start pages / Quick links / We recommend)
- *     section 3 (.default-content-wrapper): legal links <p> + copyright <p>
- */
+ * footer.js tags the regions: .footer-social, .footer-links (.footer-cols >
+ * .footer-col), .footer-legal — so styling does not depend on CMS nesting. */
 
 footer {
   background-color: var(--brand-blue, #1d4477);
@@ -36,8 +32,8 @@ footer .footer .section {
   padding: 0;
 }
 
-/* ---- Section 1: social links + "Contact us" ---- */
-footer .footer .section:first-child .default-content-wrapper {
+/* ---- Social + "Contact us" ---- */
+footer .footer .footer-social .default-content-wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -45,7 +41,7 @@ footer .footer .section:first-child .default-content-wrapper {
   border-bottom: 1px solid rgb(255 255 255 / 20%);
 }
 
-footer .footer .section:first-child h2 {
+footer .footer .footer-social h2 {
   margin: 0;
   color: #fff;
   font-size: var(--heading-size-s, 18px);
@@ -53,13 +49,13 @@ footer .footer .section:first-child h2 {
 }
 
 /* social icon row (first paragraph) */
-footer .footer .section:first-child p:first-of-type {
+footer .footer .footer-social p:first-of-type {
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
-footer .footer .section:first-child p:first-of-type a {
+footer .footer .footer-social p:first-of-type a {
   font-size: 0; /* keep text label for a11y, show only the icon */
   line-height: 0;
 }
@@ -76,13 +72,12 @@ footer .footer .icon svg {
   height: 28px;
 }
 
-/* "Contact us" reads bolder */
-footer .footer .section:first-child p:last-child a {
+footer .footer .footer-social p:last-child a {
   font-weight: 700;
 }
 
-/* ---- Section 2: three link columns (each column is a direct .section child) ---- */
-footer .footer .section:nth-child(2) {
+/* ---- Link columns ---- */
+footer .footer .footer-cols {
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;
@@ -90,14 +85,14 @@ footer .footer .section:nth-child(2) {
   border-bottom: 1px solid rgb(255 255 255 / 20%);
 }
 
-footer .footer .section:nth-child(2) h3 {
+footer .footer .footer-col h3 {
   margin: 0 0 16px;
   color: #fff;
   font-size: var(--heading-size-s, 18px);
   font-weight: 700;
 }
 
-footer .footer .section:nth-child(2) ul {
+footer .footer .footer-col ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -106,8 +101,8 @@ footer .footer .section:nth-child(2) ul {
   gap: 10px;
 }
 
-/* ---- Section 3: legal links + copyright ---- */
-footer .footer .section:last-child .default-content-wrapper {
+/* ---- Legal links + copyright ---- */
+footer .footer .footer-legal .default-content-wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -115,18 +110,18 @@ footer .footer .section:last-child .default-content-wrapper {
   font-size: var(--body-font-size-xs, 14px);
 }
 
-footer .footer .section:last-child p:first-child {
+footer .footer .footer-legal p:first-child {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 24px;
 }
 
-footer .footer .section:last-child p:last-child {
+footer .footer .footer-legal p:last-child {
   color: rgb(255 255 255 / 70%);
 }
 
 @media (width >= 600px) {
-  footer .footer .section:nth-child(2) {
+  footer .footer .footer-cols {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -136,7 +131,7 @@ footer .footer .section:last-child p:last-child {
     padding: 56px 32px 32px;
   }
 
-  footer .footer .section:last-child .default-content-wrapper {
+  footer .footer .footer-legal .default-content-wrapper {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
