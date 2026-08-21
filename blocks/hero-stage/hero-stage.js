@@ -34,6 +34,7 @@ function buildHeroMedia(videoHref) {
   img.src = HERO_POSTER;
   img.alt = '';
   img.loading = 'eager';
+  img.fetchPriority = 'high';
   media.append(img);
 
   const video = document.createElement('video');
@@ -171,8 +172,19 @@ export default function decorate(block) {
     });
   };
 
-  const startAutoplay = () => { timer = setInterval(() => goTo(current + 1), 7000); };
-  const resetAutoplay = () => { clearInterval(timer); startAutoplay(); };
+  const SLIDE_INTERVAL = 7000;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let started = false;
+
+  const startAutoplay = () => {
+    // Never auto-rotate when the user prefers reduced motion.
+    if (reduceMotion) return;
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), SLIDE_INTERVAL);
+    started = true;
+  };
+  const stopAutoplay = () => { clearInterval(timer); };
+  const resetAutoplay = () => { if (started) startAutoplay(); };
 
   dots.forEach((dot, idx) => dot.addEventListener('click', () => { goTo(idx); resetAutoplay(); }));
   prev.addEventListener('click', () => { goTo(current - 1); resetAutoplay(); });
@@ -181,8 +193,23 @@ export default function decorate(block) {
   block.append(prev, next, dotsNav);
 
   goTo(0);
-  startAutoplay();
 
-  block.addEventListener('mouseenter', () => clearInterval(timer));
-  block.addEventListener('mouseleave', startAutoplay);
+  // Defer the FIRST auto-advance until after the page has loaded, plus one full
+  // interval. This keeps the initial headline as the LCP element instead of a
+  // later slide's headline painting mid-load and inflating LCP. Manual controls
+  // (dots/arrows) still work immediately.
+  const beginAutoplay = () => {
+    if (reduceMotion || started) return;
+    window.setTimeout(startAutoplay, SLIDE_INTERVAL);
+  };
+  if (document.readyState === 'complete') beginAutoplay();
+  else window.addEventListener('load', beginAutoplay, { once: true });
+
+  // Pause when the block isn't visible (hover) or the tab is hidden.
+  block.addEventListener('mouseenter', stopAutoplay);
+  block.addEventListener('mouseleave', resetAutoplay);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAutoplay();
+    else resetAutoplay();
+  });
 }
