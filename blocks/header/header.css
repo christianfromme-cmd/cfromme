@@ -11,7 +11,7 @@ header .nav-wrapper {
   z-index: 3;
   position: sticky;
   top: 0;
-  background: linear-gradient(90deg, var(--brand-blue) 0%, var(--brand-blue) 20%, var(--energy-green-dark) 80%, var(--energy-green) 100%);
+  background: linear-gradient(90deg, var(--brand-blue) 0%, var(--brand-blue) 45%, var(--energy-green-dark) 88%, var(--energy-green) 100%);
 }
 
 header nav {
