@@ -152,6 +152,30 @@ function buildCard(row) {
 }
 
 /**
+ * Adds an expandable "SHOW MORE…" control to a card body whose text overflows
+ * the clamp. Must run after the card is in the document so heights are known.
+ * @param {Element} body The card body element
+ */
+function addShowMore(body) {
+  // Overflowing when the natural content is taller than the clamped box.
+  if (body.scrollHeight - body.clientHeight < 4) return;
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'embed-social-showmore';
+  toggle.textContent = 'Show more…';
+  toggle.setAttribute('aria-expanded', 'false');
+
+  toggle.addEventListener('click', () => {
+    const expanded = body.classList.toggle('is-expanded');
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.textContent = expanded ? 'Show less' : 'Show more…';
+  });
+
+  body.after(toggle);
+}
+
+/**
  * loads and decorates the block
  * @param {Element} block The block element
  */
@@ -188,4 +212,9 @@ export default function decorate(block) {
   }
 
   block.append(grid);
+
+  // After layout, add a "SHOW MORE…" control to any card whose text is clamped.
+  requestAnimationFrame(() => {
+    grid.querySelectorAll('.embed-social-card-body').forEach(addShowMore);
+  });
 }

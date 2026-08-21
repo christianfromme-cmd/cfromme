@@ -155,6 +155,35 @@
   background: linear-gradient(rgb(255 255 255 / 0%), var(--background-color));
 }
 
+/* Expanded state: show the full post text, drop the clamp + fade. */
+.embed-social .embed-social-card-body.is-expanded {
+  max-height: none;
+}
+
+.embed-social .embed-social-card-body.is-expanded::after {
+  content: none;
+}
+
+/* "Show more…" toggle */
+.embed-social .embed-social-showmore {
+  display: inline-block;
+  margin: 0 16px 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link-color);
+  font-family: inherit;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.embed-social .embed-social-showmore:hover {
+  color: var(--link-hover-color);
+}
+
 .embed-social .embed-social-card-body p {
   margin: 0 0 0.5em;
 }
