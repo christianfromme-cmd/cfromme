@@ -176,6 +176,11 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSectionMetadata(main);
+  // Remove any library-metadata blocks before decoration. They carry the DA
+  // library panel's name/description, which the panel reads from the content
+  // source — they must never render or be decorated as a block, since there is
+  // no library-metadata block code and loading it would 404.
+  main.querySelectorAll('.library-metadata').forEach((el) => el.remove());
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
