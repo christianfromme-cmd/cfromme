@@ -1,40 +1,42 @@
 {
   "variantName": "embed-social",
   "baseBlock": "embed",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "created": "2026-08-19T16:00:05.897712Z",
   "sourceContext": {
     "originUrl": "https://www.rwe.com/en/rwe-careers-portal/",
-    "originPage": "'RWE @ Social Media' consent-gated feed",
+    "originPage": "'RWE @ Social Media' social feed",
     "templateSource": "embed"
   },
   "visualCharacteristics": {
     "colorScheme": "light",
     "density": "wide",
     "purpose": "social-feed",
-    "imagePattern": "noimg"
+    "imagePattern": "mixed"
   },
   "contentPattern": {
-    "structure": "consent-gated social media feed placeholder + embed",
-    "buttonCount": 0,
-    "imageCount": 0
+    "structure": "intro + masonry grid of social post cards (avatar/name/network, text with show-more, optional image or video media, time + external link)",
+    "buttonCount": 1,
+    "imageCount": 2
   },
+  "variants": ["live"],
   "reuseGuidance": {
     "suitableFor": [
-      "social media feed embeds",
-      "consent-gated third-party embeds"
+      "social media feed / post card grids",
+      "author-managed LinkedIn-style post walls",
+      "consent-gated third-party feeds (live variant)"
     ],
     "notSuitableFor": [
-      "inline video",
-      "static images"
+      "single hero embeds",
+      "inline article body"
     ]
   },
-  "notes": "NO UI Kit source. Consent-gated social feed; requires consent-management integration (comfort cookies) - flag for manual wiring.",
+  "notes": "Author-managed masonry card grid matching the live RWE social feed. Row 1 = intro (heading + copy); each following row = one post card. A cell may contain a <picture> (wrap in a link to mark it a video), post text, and a final link whose text is the relative time and whose href is the external post URL. The 'live' variant additionally mounts a consent-gated Flockler feed container (wired by the site's consent-management layer), keeping the authored cards as the no-consent fallback. Icons sourced from the RWE UI Kit.",
   "usage": {
     "pagesUsing": [
       "/en/rwe-careers-portal/index"
     ],
     "reuseCount": 1,
-    "lastUsed": "2026-08-19T16:00:05.897712Z"
+    "lastUsed": "2026-08-21T00:00:00.000000Z"
   }
 }
