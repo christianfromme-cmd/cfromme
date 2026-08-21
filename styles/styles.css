@@ -352,3 +352,10 @@ main .section.tinted {
   margin: 0;
   padding: 48px 0;
 }
+
+/* DA block-library metadata — a "library-metadata" block carries the library
+   panel's name/description for a sample page. It must never render on the page
+   (or in the DA preview); DA reads it, it is not display content. */
+.library-metadata {
+  display: none !important;
+}
