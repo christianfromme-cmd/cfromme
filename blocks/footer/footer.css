@@ -32,7 +32,27 @@ footer .footer .section {
   padding: 0;
 }
 
-/* ---- Social + "Contact us" ---- */
+/* ---- Breadcrumb bar (top of footer) ---- */
+footer .footer .footer-breadcrumb {
+  border-bottom: 1px solid rgb(255 255 255 / 20%);
+}
+
+footer .footer .footer-breadcrumb .default-content-wrapper {
+  padding: 0;
+}
+
+footer .footer .footer-breadcrumb p {
+  padding: 16px 0;
+  font-size: var(--body-font-size-s, 16px);
+  font-weight: 700;
+}
+
+footer .footer .footer-breadcrumb a {
+  font-weight: 400;
+}
+
+/* ---- Share row ("Recommend") + social row ("You can also find us on") ---- */
+footer .footer .footer-share .default-content-wrapper,
 footer .footer .footer-social .default-content-wrapper {
   display: flex;
   flex-direction: column;
@@ -41,20 +61,25 @@ footer .footer .footer-social .default-content-wrapper {
   border-bottom: 1px solid rgb(255 255 255 / 20%);
 }
 
-footer .footer .footer-social h2 {
+footer .footer .footer-share h2,
+footer .footer .footer-social h2,
+footer .footer .footer-social h3 {
   margin: 0;
   color: #fff;
   font-size: var(--heading-size-s, 18px);
   font-weight: 700;
 }
 
-/* social icon row (first paragraph) */
+/* icon row (the paragraph holding the social/share links) */
+footer .footer .footer-share p:first-of-type,
 footer .footer .footer-social p:first-of-type {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
   align-items: center;
 }
 
+footer .footer .footer-share p:first-of-type a,
 footer .footer .footer-social p:first-of-type a {
   font-size: 0; /* keep text label for a11y, show only the icon */
   line-height: 0;
@@ -62,17 +87,18 @@ footer .footer .footer-social p:first-of-type a {
 
 footer .footer .icon {
   display: inline-block;
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
 }
 
 footer .footer .icon img,
 footer .footer .icon svg {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
 }
 
-footer .footer .footer-social p:last-child a {
+/* "Contact us" reads bolder (in the social section's second column) */
+footer .footer .footer-social p:last-of-type a {
   font-weight: 700;
 }
 
