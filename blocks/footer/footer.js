@@ -16,5 +16,54 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+  // Tag the three structural regions by their content, so styling does not
+  // depend on how the CMS nests the authored markup:
+  //   1. social + "Contact us"   2. link columns   3. legal + copyright
+  const sections = [...footer.querySelectorAll(':scope > .section')];
+  const linksSection = sections.find((s) => s.querySelectorAll('h3').length >= 2);
+  const legalSection = [...sections].reverse()
+    .find((s) => /disclaimer|imprint|©/i.test(s.textContent));
+  const socialSection = sections.find((s) => s !== linksSection && s !== legalSection);
+
+  if (socialSection) socialSection.classList.add('footer-social');
+  if (legalSection) legalSection.classList.add('footer-legal');
+
+  // Link columns. Depending on how the CMS nests the authored markup the
+  // middle section arrives either as a flat sequence of (h3, ul) pairs OR as
+  // separate wrapper <div>s each holding one (h3, ul). Normalise both into a
+  // single .footer-cols grid of .footer-col groups keyed off each heading.
+  if (linksSection) {
+    linksSection.classList.add('footer-links');
+    const wrapper = linksSection.querySelector(':scope > .default-content-wrapper') || linksSection;
+
+    // Unwrap nested <div>s until the headings/lists are direct children of the
+    // wrapper (the CMS may nest each column one or two levels deep).
+    let guard = 0;
+    while (guard < 5 && [...wrapper.children].some((c) => c.tagName === 'DIV')) {
+      [...wrapper.children].forEach((child) => {
+        if (child.tagName === 'DIV') child.replaceWith(...child.childNodes);
+      });
+      guard += 1;
+    }
+
+    const cols = document.createElement('div');
+    cols.className = 'footer-cols';
+    let current = null;
+    [...wrapper.children].forEach((node) => {
+      if (/^H[1-6]$/.test(node.tagName)) {
+        current = document.createElement('div');
+        current.className = 'footer-col';
+        cols.append(current);
+      }
+      if (!current) {
+        current = document.createElement('div');
+        current.className = 'footer-col';
+        cols.append(current);
+      }
+      current.append(node);
+    });
+    wrapper.append(cols);
+  }
+
   block.append(footer);
 }
