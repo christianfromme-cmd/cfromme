@@ -14,17 +14,31 @@ The `ui-kit/` directory is the RWE brand UI Kit (Pattern Lab export): component
 designs (`.hbs` / `.markup-only.html` / `.rendered.html`), the RWE stylesheets
 (`nkStyles*.css`, `plStyles.css`), and — most importantly — the official brand
 assets under `ui-kit/images/`:
-- `ui-kit/images/rwe-icons/` — ~1000 official RWE brand SVG icons, organised by
-  set (`01_Communication_Icons/...positive|negative`, `04_Special_Characters_Energyfields/{RWE Blue,Energy Dark Green,Energy Light Green,White}`, etc.). Positive = dark icon for light backgrounds; negative = white icon for dark backgrounds.
+- `ui-kit/images/rwe-icons/` — ~1000 official RWE brand SVG icons, organised by set:
+  - `01_Communication_Icons/Communication_Icons_{positive|negative}/svg/` — general UI
+    icons (arrows, info, world, etc.). Positive = dark icon for light backgrounds;
+    negative = white icon for dark backgrounds.
+  - `03_Social_Media_Icons/SocialMedia_Icon_{blau|weiss}/svg/` — social/share icons
+    (LinkedIn, LinkedIn CEO, YouTube, Instagram, Facebook, X/Twitter, Mail, Xing,
+    Glassdoor, Kununu…). `weiss_Energiegruen_hell` = white for dark backgrounds;
+    `blau_Energiegruen_dunkel` = blue for light backgrounds.
+  - `04_Special_Characters_Energyfields/{RWE Blue,Energy Dark Green,Energy Light Green,White}/svg/`
+    — energyfield glyphs (arrow, +, punctuation, digits) in each brand colour.
 - `ui-kit/images/` also holds the RWE logos (`rwe_logo.svg`, `rwe_logo-white.svg`),
   the ticker icon (`kurznachrichtenmodul-info.svg`), and sample/placeholder photos.
 
+**GENERAL RULE — ALWAYS look up icons in `ui-kit/images/rwe-icons/` first.**
+For ANY icon need (UI, social, arrows, glyphs, logos), search that tree by name
+BEFORE writing an inline SVG, using a Unicode/emoji glyph, or hot-linking a remote
+asset. This is mandatory, not a suggestion.
+
 **Policy — when a block needs an icon, logo, or brand graphic:**
-1. First look in `ui-kit/images/` (search `rwe-icons/` by name, e.g. `arrow_right`,
-   `RWE_International_world`). If a matching official asset exists, copy it into the
-   project (`icons/<name>.svg` for icons) and reference the local same-origin path —
-   never hot-link `www.rwe.com/-/media/...`. Local assets are faster, cache-safe, and
-   don't break under the image-optimization pipeline.
+1. Search `ui-kit/images/rwe-icons/` by name first (e.g. `arrow_right`,
+   `RWE_International_world`, `LinkedIn`, `YouTube`). Also check `ui-kit/images/` for
+   logos. If a matching official asset exists, copy it into the project
+   (`icons/<name>.svg`) and reference the local same-origin path — never hot-link
+   `www.rwe.com/-/media/...`. Local assets are faster, cache-safe, and don't break
+   under the image-optimization pipeline.
 2. Pick the right colour variant for the background (positive vs negative / Blue vs
    Energy Green vs White) and check contrast (WCAG AA) — deviate from the source
    colour if the source itself fails contrast (see the map-marker decision in
