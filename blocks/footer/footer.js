@@ -16,15 +16,21 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
-  // Tag the three structural regions by their content, so styling does not
-  // depend on how the CMS nests the authored markup:
-  //   1. social + "Contact us"   2. link columns   3. legal + copyright
+  // Tag the structural regions by their content, so styling does not depend on
+  // how the CMS nests the authored markup:
+  //   breadcrumb | Recommend (share) | find-us-on + contact | link columns | legal
   const sections = [...footer.querySelectorAll(':scope > .section')];
   const linksSection = sections.find((s) => s.querySelectorAll('h3').length >= 2);
   const legalSection = [...sections].reverse()
     .find((s) => /disclaimer|imprint|©/i.test(s.textContent));
-  const socialSection = sections.find((s) => s !== linksSection && s !== legalSection);
+  const crumbSection = sections.find((s) => s !== linksSection && s !== legalSection
+    && !s.querySelector('h1, h2, h3, h4, h5, h6') && s.querySelector('a'));
+  const shareSection = sections.find((s) => /^\s*Recommend/i.test(s.textContent));
+  const socialSection = sections.find((s) => s !== linksSection && s !== legalSection
+    && s !== crumbSection && s !== shareSection);
 
+  if (crumbSection) crumbSection.classList.add('footer-breadcrumb');
+  if (shareSection) shareSection.classList.add('footer-share');
   if (socialSection) socialSection.classList.add('footer-social');
   if (legalSection) legalSection.classList.add('footer-legal');
 
