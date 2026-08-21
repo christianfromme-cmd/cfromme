@@ -210,7 +210,12 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  loadHeader(doc.querySelector('body > header'));
+  // On block-library preview pages (served under /library/blocks/), skip the
+  // site header/footer so the DA Library panel previews just the block itself,
+  // not the whole page chrome.
+  const isLibraryPreview = window.location.pathname.includes('/library/blocks/');
+
+  if (!isLibraryPreview) loadHeader(doc.querySelector('body > header'));
 
   const main = doc.querySelector('main');
   await loadSections(main);
@@ -219,7 +224,7 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadFooter(doc.querySelector('body > footer'));
+  if (!isLibraryPreview) loadFooter(doc.querySelector('body > footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
