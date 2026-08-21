@@ -140,7 +140,7 @@
 .embed-social .embed-social-card-body {
   position: relative;
   padding: 12px 16px 4px;
-  max-height: 8.4em;
+  max-height: 4.5em; /* ~3 lines of body copy, matching the live clamp */
   overflow: hidden;
   color: var(--brand-blue);
   font-size: var(--body-font-size-s);
