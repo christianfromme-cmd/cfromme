@@ -1,20 +1,144 @@
+/* RWE footer — dark-blue, social/contact row, 3 link columns, legal + copyright.
+ * Decorated structure (fragment -> footer.js):
+ *   footer > .footer(block) > div > .section (x3)
+ *     section 1 (.default-content-wrapper): h2 + social <p> + "Contact us" <p>
+ *     section 2: three raw <div> column cells (Start pages / Quick links / We recommend)
+ *     section 3 (.default-content-wrapper): legal links <p> + copyright <p>
+ */
+
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: var(--brand-blue, #1d4477);
+  color: #fff;
+  font-size: var(--body-font-size-s, 16px);
 }
 
 footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+  max-width: var(--content-max-width, 1170px);
+  margin: 0 auto;
+  padding: 48px 24px 24px;
+}
+
+footer .footer a:any-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+footer .footer a:hover,
+footer .footer a:focus-visible {
+  color: var(--energy-green, #3ed8c3);
 }
 
 footer .footer p {
   margin: 0;
 }
 
+footer .footer .section {
+  padding: 0;
+}
+
+/* ---- Section 1: social links + "Contact us" ---- */
+footer .footer .section:first-child .default-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgb(255 255 255 / 20%);
+}
+
+footer .footer .section:first-child h2 {
+  margin: 0;
+  color: #fff;
+  font-size: var(--heading-size-s, 18px);
+  font-weight: 700;
+}
+
+/* social icon row (first paragraph) */
+footer .footer .section:first-child p:first-of-type {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+footer .footer .section:first-child p:first-of-type a {
+  font-size: 0; /* keep text label for a11y, show only the icon */
+  line-height: 0;
+}
+
+footer .footer .icon {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+}
+
+footer .footer .icon img,
+footer .footer .icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* "Contact us" reads bolder */
+footer .footer .section:first-child p:last-child a {
+  font-weight: 700;
+}
+
+/* ---- Section 2: three link columns (each column is a direct .section child) ---- */
+footer .footer .section:nth-child(2) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  padding: 32px 0;
+  border-bottom: 1px solid rgb(255 255 255 / 20%);
+}
+
+footer .footer .section:nth-child(2) h3 {
+  margin: 0 0 16px;
+  color: #fff;
+  font-size: var(--heading-size-s, 18px);
+  font-weight: 700;
+}
+
+footer .footer .section:nth-child(2) ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---- Section 3: legal links + copyright ---- */
+footer .footer .section:last-child .default-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+  font-size: var(--body-font-size-xs, 14px);
+}
+
+footer .footer .section:last-child p:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+footer .footer .section:last-child p:last-child {
+  color: rgb(255 255 255 / 70%);
+}
+
+@media (width >= 600px) {
+  footer .footer .section:nth-child(2) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (width >= 900px) {
   footer .footer > div {
-    padding: 40px 32px 24px;
+    padding: 56px 32px 32px;
+  }
+
+  footer .footer .section:last-child .default-content-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 }
