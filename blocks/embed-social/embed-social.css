@@ -235,7 +235,19 @@
   opacity: 1;
 }
 
-/* Live variant: consent-gated feed mount point ------------------------------ */
+/* Live variant: consent-gated Flockler wall ---------------------------------- */
+.embed-social .embed-social-feed {
+  margin-top: 8px;
+}
+
+/* The Flockler container is empty until the wall loads; keep it out of flow so
+   the authored fallback grid shows cleanly until then. */
 .embed-social.live .embed-social-feed:empty {
+  display: none;
+}
+
+/* Once the live wall has loaded, the authored fallback grid is hidden (via the
+   [hidden] attribute set in JS); give the Flockler wall room to render. */
+.embed-social.live.feed-loaded .embed-social-grid {
   display: none;
 }

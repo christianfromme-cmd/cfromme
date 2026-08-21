@@ -17,15 +17,22 @@
  *
  * Variants:
  *   (default)  → render the authored cards.
- *   "live"     → additionally mount a Flockler feed container, keeping the
- *                authored cards as the no-consent fallback. The live feed itself
- *                is wired by the site's consent-management layer.
+ *   "live"     → load RWE's live Flockler social wall once the visitor has given
+ *                consent, replacing the authored cards. Until consent is granted
+ *                the authored cards remain as the fallback view. This reuses the
+ *                same Flockler site + wall the live rwe.com careers page uses.
  */
 
 const LINKEDIN_ICON = '<img class="embed-social-network" src="/icons/rwe-social-linkedin-blue.svg" alt="LinkedIn" loading="lazy" width="24" height="24">';
 const RWE_AVATAR = '<img class="embed-social-avatar" src="/icons/rwe-logo.svg" alt="" aria-hidden="true" loading="lazy">';
 const TIME_ICON = '<img src="/icons/rwe-time.svg" alt="" aria-hidden="true" loading="lazy" width="16" height="16">';
 const EXTERN_ICON = '<img src="/icons/rwe-extern.svg" alt="" aria-hidden="true" loading="lazy" width="14" height="14">';
+
+// RWE's Flockler social wall (same account/wall as the live rwe.com careers
+// page: "HR career social wall EN (LinkedIn only)").
+const FLOCKLER_SITE = '1740543370f005f9a7ee89ffd1e28277';
+const FLOCKLER_WALL = '1973f081d510ac80a2f9c9713a49f9e5';
+const FLOCKLER_SRC = `https://plugins.flockler.com/embed/${FLOCKLER_SITE}/${FLOCKLER_WALL}`;
 
 /**
  * Returns the first row IF it looks like the intro (has a heading, no media).
@@ -176,6 +183,51 @@ function addShowMore(body) {
 }
 
 /**
+ * Loads RWE's Flockler social wall into the block, replacing the authored
+ * fallback cards. Injects the Flockler container + embed script once; the
+ * script self-initialises from the container id. Safe to call multiple times.
+ * @param {Element} block The block element
+ * @param {Element} fallback The authored grid to hide once the wall loads
+ */
+function loadFlocklerWall(block, fallback) {
+  if (block.dataset.flocklerLoaded === 'true') return;
+  block.dataset.flocklerLoaded = 'true';
+
+  const container = document.createElement('div');
+  container.className = 'embed-social-feed';
+  container.id = `flockler-embed-${FLOCKLER_WALL}`;
+  block.append(container);
+
+  const script = document.createElement('script');
+  script.src = FLOCKLER_SRC;
+  script.async = true;
+  // Once Flockler has populated the wall, hide the authored fallback cards.
+  script.addEventListener('load', () => {
+    block.classList.add('feed-loaded');
+    if (fallback) fallback.setAttribute('hidden', '');
+  });
+  document.head.append(script);
+}
+
+/**
+ * Wires the live variant to the site consent layer: load the Flockler wall when
+ * consent is (or becomes) granted, otherwise leave the authored fallback shown.
+ * @param {Element} block The block element
+ * @param {Element} fallback The authored grid
+ */
+function initLiveFeed(block, fallback) {
+  const onUpdate = (e) => {
+    if (e.detail && e.detail.consented) loadFlocklerWall(block, fallback);
+  };
+  window.addEventListener('consent.update', onUpdate);
+  // Handle the case where consent was already granted before this block loaded.
+  const params = new URLSearchParams(window.location.search).get('consent');
+  if (params && ['accept', 'true', '1', 'yes'].includes(params.toLowerCase())) {
+    loadFlocklerWall(block, fallback);
+  }
+}
+
+/**
  * loads and decorates the block
  * @param {Element} block The block element
  */
@@ -198,23 +250,16 @@ export default function decorate(block) {
 
   block.textContent = '';
   if (intro.childNodes.length) block.append(intro);
-
-  if (isLive) {
-    // Mount point for the consent-gated Flockler feed. The site's consent layer
-    // populates this once "comfort cookies" are accepted; the authored cards
-    // below serve as the no-consent fallback view.
-    const mount = document.createElement('div');
-    mount.className = 'embed-social-feed';
-    mount.dataset.flocklerEmbed = 'rwe-careers';
-    mount.setAttribute('role', 'note');
-    mount.setAttribute('aria-label', 'Live social media feed');
-    block.append(mount);
-  }
-
   block.append(grid);
 
   // After layout, add a "SHOW MORE…" control to any card whose text is clamped.
   requestAnimationFrame(() => {
     grid.querySelectorAll('.embed-social-card-body').forEach(addShowMore);
   });
+
+  if (isLive) {
+    // The authored grid is the fallback shown before consent; once the visitor
+    // consents, RWE's live Flockler wall loads and replaces it.
+    initLiveFeed(block, grid);
+  }
 }
