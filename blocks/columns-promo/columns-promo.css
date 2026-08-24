@@ -60,6 +60,7 @@
 
 /* Text panel — RWE blue -> petrol gradient, white text. */
 .columns-promo-body {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -67,6 +68,30 @@
   padding: 24px;
   background-image: linear-gradient(45deg, var(--brand-blue) 22%, var(--energy-green-dark));
   color: #fff;
+  overflow: hidden;
+}
+
+/* RWE "impact print" fingerprint-arc motif, bottom-right of the gradient panel
+   (decorative; matches source .impact-print-image on tea01r gradient teasers). */
+.columns-promo-body::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  width: 220px;
+  height: 220px;
+  max-width: 55%;
+  background: url('https://www.rwe.com/-/media/RWE/Impact-Print/Impact-Print-Dark-Green-and-White.svg') no-repeat right bottom;
+  background-size: contain;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Keep the panel's text/CTA above the motif. */
+.columns-promo-body > * {
+  position: relative;
+  z-index: 1;
 }
 
 .columns-promo-body h3 {
