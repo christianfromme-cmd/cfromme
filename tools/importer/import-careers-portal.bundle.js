@@ -479,7 +479,10 @@ var CustomImportScript = (() => {
       },
       {
         name: "faq-list",
-        instances: ["#off-screen-content > div > main .acc01-faq"]
+        instances: [
+          "#off-screen-content > div > main .acc01-faq",
+          "#off-screen-content > div > main section:has(.accordion-item)"
+        ]
       },
       {
         name: "section-rc3",
