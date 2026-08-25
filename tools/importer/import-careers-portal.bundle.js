@@ -68,8 +68,39 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/ticker.js
+  // tools/importer/parsers/hero-stage-image.js
   function parse2(element, { document: document2 }) {
+    let bg = element.querySelector("img:not(.impact-print-image)");
+    if (!bg) {
+      const styleText = Array.from(element.querySelectorAll("style")).map((s) => s.textContent).join("\n");
+      const urls = [...styleText.matchAll(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/g)].map((m) => m[1]);
+      if (urls.length) {
+        bg = document2.createElement("img");
+        bg.src = urls[urls.length - 1];
+        bg.alt = "";
+      }
+    }
+    const textCell = [];
+    const heading = element.querySelector("h1, h2, .headline");
+    if (heading) textCell.push(heading);
+    const subheading = element.querySelector("h3, .subheadline");
+    if (subheading) textCell.push(subheading);
+    if (!bg && !textCell.length) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const block = WebImporter.Blocks.createBlock(document2, {
+      name: "hero-stage (image)",
+      cells: [
+        [bg || ""],
+        [textCell.length ? textCell : ""]
+      ]
+    });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/ticker.js
+  function parse3(element, { document: document2 }) {
     const cells = [];
     const heading = element.querySelector(".short-news__header h2, h2");
     if (heading) cells.push([[heading]]);
@@ -93,7 +124,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/cards-article.js
-  function parse3(element, { document: document2 }) {
+  function parse4(element, { document: document2 }) {
     const cards = Array.from(element.querySelectorAll("article.tea01--image-left"));
     if (!cards.length) {
       element.replaceWith(...element.childNodes);
@@ -129,7 +160,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/columns-about.js
-  function parse4(element, { document: document2 }) {
+  function parse5(element, { document: document2 }) {
     const row = element.closest(".row") || element.parentElement;
     if (row && row.hasAttribute("data-columns-about-done")) {
       element.remove();
@@ -160,7 +191,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/columns-pullquote.js
-  function parse5(element, { document: document2 }) {
+  function parse6(element, { document: document2 }) {
     const portrait = element.querySelector(".round-image__image img, img");
     const name = element.querySelector(".round-image__image-title, .round-image__image-title strong");
     const role = element.querySelector(".round-image__image-subtitle");
@@ -187,7 +218,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/columns-promo.js
-  function parse6(element, { document: document2 }) {
+  function parse7(element, { document: document2 }) {
     const article = element.querySelector("article.tea01--image-left") || element;
     const media = article.querySelector("video, .media-container");
     const heading = article.querySelector("h3, .headline");
@@ -215,7 +246,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/columns-note.js
-  function parse7(element, { document: document2 }) {
+  function parse8(element, { document: document2 }) {
     const content = element.querySelector(".content");
     const noteCell = [];
     if (content) {
@@ -233,7 +264,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/gallery.js
-  function parse8(element, { document: document2 }) {
+  function parse9(element, { document: document2 }) {
     const entries = Array.from(element.querySelectorAll(".hotspot__entry"));
     if (!entries.length) {
       element.replaceWith(...element.childNodes);
@@ -260,7 +291,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/carousel-reviews.js
-  function parse9(element, { document: document2 }) {
+  function parse10(element, { document: document2 }) {
     let slides = Array.from(element.querySelectorAll(".slider-slide:not(.slick-cloned)"));
     if (!slides.length) slides = Array.from(element.querySelectorAll(".slider-slide"));
     const cells = [];
@@ -280,7 +311,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/embed-social.js
-  function parse10(element, { document: document2 }) {
+  function parse11(element, { document: document2 }) {
     const contentCell = [];
     const heading = element.querySelector("h2, .headline");
     if (heading) contentCell.push(heading);
@@ -300,7 +331,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/faq-list.js
-  function parse11(element, { document: document2 }) {
+  function parse12(element, { document: document2 }) {
     const items = Array.from(element.querySelectorAll(".accordion-item"));
     if (!items.length) {
       element.replaceWith(...element.childNodes);
@@ -413,16 +444,17 @@ var CustomImportScript = (() => {
   // tools/importer/import-careers-portal.js
   var parsers = {
     "hero-stage": parse,
-    ticker: parse2,
-    "cards-article": parse3,
-    "columns-about": parse4,
-    "columns-pullquote": parse5,
-    "columns-promo": parse6,
-    "columns-note": parse7,
-    gallery: parse8,
-    "carousel-reviews": parse9,
-    "embed-social": parse10,
-    "faq-list": parse11
+    "hero-stage-image": parse2,
+    ticker: parse3,
+    "cards-article": parse4,
+    "columns-about": parse5,
+    "columns-pullquote": parse6,
+    "columns-promo": parse7,
+    "columns-note": parse8,
+    gallery: parse9,
+    "carousel-reviews": parse10,
+    "embed-social": parse11,
+    "faq-list": parse12
   };
   var transformers = [
     transform,
@@ -438,6 +470,10 @@ var CustomImportScript = (() => {
       {
         name: "hero-stage",
         instances: ["#off-screen-content > div > header .sli01--stage-components.sli01--carousel"]
+      },
+      {
+        name: "hero-stage-image",
+        instances: ["#off-screen-content .stage.sta01--compact", '#off-screen-content [data-tpl="sta01"]']
       },
       {
         name: "ticker",

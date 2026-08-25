@@ -3,6 +3,7 @@
 
 // PARSER IMPORTS
 import heroStageParser from './parsers/hero-stage.js';
+import heroStageImageParser from './parsers/hero-stage-image.js';
 import tickerParser from './parsers/ticker.js';
 import cardsArticleParser from './parsers/cards-article.js';
 import columnsAboutParser from './parsers/columns-about.js';
@@ -21,6 +22,7 @@ import sectionsTransformer from './transformers/rwe-sections.js';
 // PARSER REGISTRY
 const parsers = {
   'hero-stage': heroStageParser,
+  'hero-stage-image': heroStageImageParser,
   ticker: tickerParser,
   'cards-article': cardsArticleParser,
   'columns-about': columnsAboutParser,
@@ -50,6 +52,10 @@ const PAGE_TEMPLATE = {
     {
       name: 'hero-stage',
       instances: ['#off-screen-content > div > header .sli01--stage-components.sli01--carousel'],
+    },
+    {
+      name: 'hero-stage-image',
+      instances: ['#off-screen-content .stage.sta01--compact', '#off-screen-content [data-tpl="sta01"]'],
     },
     {
       name: 'ticker',

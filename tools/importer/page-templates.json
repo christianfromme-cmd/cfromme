@@ -18,6 +18,13 @@
           ]
         },
         {
+          "name": "hero-stage-image",
+          "instances": [
+            "#off-screen-content .stage.sta01--compact",
+            "#off-screen-content [data-tpl=\"sta01\"]"
+          ]
+        },
+        {
           "name": "ticker",
           "instances": [
             "#off-screen-content > div > main .short-news"

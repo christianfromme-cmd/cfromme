@@ -61,7 +61,61 @@ function buildHeroMedia(videoHref) {
   return media;
 }
 
+/**
+ * Decorates the single-image "image" variant (RWE sta01--compact stage):
+ * a full-bleed background photo with a compact title panel overlaid lower-left
+ * and the impact-print motif (via CSS ::after). No carousel.
+ *
+ * Authoring contract (Hero library convention, 1 column):
+ *   row 1 → background image (a <picture>/<img>)
+ *   row 2 → title + subheading
+ * Any stray impact-print image is removed (it's decorative and provided by CSS
+ * as a watermark — never standalone).
+ * @param {Element} block
+ */
+function decorateImageVariant(block) {
+  const rows = [...block.children];
+
+  // Drop any stray impact-print image anywhere in the block.
+  block.querySelectorAll('img[src*="impact-print" i]').forEach((img) => {
+    const wrap = img.closest('picture') || img;
+    const p = wrap.closest('p') || wrap;
+    p.remove();
+  });
+
+  // Row 1: background photo.
+  const photo = document.createElement('div');
+  photo.className = 'hero-stage-photo';
+  photo.setAttribute('aria-hidden', 'true');
+  const pic = block.querySelector('picture') || block.querySelector('img');
+  if (pic) photo.append(pic.closest('picture') || pic);
+
+  // Row 2 (or remaining text): title + subheading into the overlaid panel.
+  const panel = document.createElement('div');
+  panel.className = 'hero-stage-panel';
+  const headline = block.querySelector('h1, h2');
+  if (headline) headline.classList.add('hero-stage-headline');
+  block.querySelectorAll('h1, h2, h3').forEach((h) => panel.append(h));
+
+  const content = document.createElement('div');
+  content.className = 'hero-stage-content';
+  content.append(panel);
+
+  const slide = document.createElement('div');
+  slide.className = 'hero-stage-slide';
+  slide.append(content);
+
+  rows.forEach((r) => r.remove());
+  block.append(photo, slide);
+}
+
 export default function decorate(block) {
+  // Single-image stage variant — distinct layout, handled separately.
+  if (block.classList.contains('image')) {
+    decorateImageVariant(block);
+    return;
+  }
+
   const slides = [...block.children];
 
   // Clean up + tag each slide.
