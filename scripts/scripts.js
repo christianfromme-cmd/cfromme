@@ -76,6 +76,30 @@ function buildWidgetAutoBlocks(main) {
 }
 
 /**
+ * Turns a run of in-page anchor links (each a lone `<p><a href="#…">`) into an
+ * `anchor-nav` block — the RWE quick-jump button grid seen on sub-pages like
+ * "What we offer". Only fires when a wrapper holds 3+ such links and nothing
+ * else, so ordinary links are unaffected.
+ * @param {Element} main The container element
+ */
+function buildAnchorNavAutoBlocks(main) {
+  main.querySelectorAll(':scope > div').forEach((wrapper) => {
+    if (wrapper.querySelector('[class]')) return; // skip real blocks/decorated content
+    const paras = [...wrapper.children].filter((el) => el.tagName === 'P');
+    if (paras.length < 3 || paras.length !== wrapper.children.length) return;
+    const links = paras.map((p) => {
+      const a = p.querySelector(':scope > a[href^="#"]');
+      const lone = a && p.children.length === 1 && p.textContent.trim() === a.textContent.trim();
+      return lone ? a : null;
+    });
+    if (links.some((a) => !a)) return; // each paragraph must be a lone in-page anchor
+    // Single row, single cell holding all the anchor links (decorate lays them out).
+    const block = buildBlock('anchor-nav', [[{ elems: links }]]);
+    wrapper.replaceChildren(block);
+  });
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -99,6 +123,7 @@ function buildAutoBlocks(main) {
       });
     }
     buildWidgetAutoBlocks(main);
+    buildAnchorNavAutoBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
