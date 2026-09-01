@@ -28,6 +28,20 @@ export default function transform(hookName, element, payload) {
     // Cookie / consent management overlay (blocks parsing, non-authorable).
     WebImporter.DOMUtils.remove(element, ['#usercentrics-root']);
 
+    // Global header chrome that renders ABOVE the first block: the
+    // language/target-group switcher (English/Deutsch list) and the search
+    // "Enter search term" app-drawer. Both are site chrome, not page content —
+    // remove before parsing so they never leak into the imported document.
+    WebImporter.DOMUtils.remove(element, [
+      '#target-group-select', // language / target-group switcher nav (las01r)
+      '#off-screen-app-drawer', // search drawer wrapper ("Enter search term")
+      '#search-drawer',
+      '[data-tpl="ses01"]', // search form component (fallback if drawer id absent)
+      '[data-tpl="target-group-select"]',
+      'nav[data-tpl="las01r"]',
+      '[data-link-name="Language-Switch"]',
+    ]);
+
     // Remove duplicated (cloned) carousel/ticker slides BEFORE block parsing so
     // carousel/ticker parsers don't emit duplicate cells.
     WebImporter.DOMUtils.remove(element, ['.slick-cloned']);
@@ -56,6 +70,13 @@ export default function transform(hookName, element, payload) {
       '#main-footer',
       '#TextSnippetShare',
       '#BackToTop',
+    ]);
+
+    // Third-party tracking pixels (e.g. accountinsight.cloud) leak in as empty
+    // <img>s — non-authorable, drop them.
+    WebImporter.DOMUtils.remove(element, [
+      'img[src*="accountinsight"]',
+      'img[src*="/track/"]',
     ]);
 
     // Safe technical element removal.

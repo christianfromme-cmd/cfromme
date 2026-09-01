@@ -249,55 +249,72 @@
 }
 
 /* ============================================================================
-   Variant: hero-stage.image — single-image stage (RWE sta01--compact)
-   A full-bleed photo with a compact dark-blue title panel overlaid lower-left
-   and the impact-print motif as a bottom-right watermark. No carousel, no
-   gradient background (the photo fills the stage). Used by sub-page heroes
-   like "What we offer".
+   Variant: hero-stage.image — single-image stage (RWE sta01--compact lightImage)
+   The photo drives the stage height (shown at its natural aspect ratio, not
+   cropped to a fixed height), with a translucent frosted title panel overlaid
+   center-left and the impact-print motif as a bottom-right watermark. Matches
+   the live careers "Why work here" / "What we offer" stage.
    ============================================================================ */
 
 .hero-stage.image {
-  min-height: 380px;
-  background: none; /* photo fills the stage, not the gradient */
+  min-height: 0; /* the photo defines the height, no fixed min-height crop */
+  background: none;
 }
 
-/* The authored <picture>/<img> is the full-bleed background photo. */
+/* The authored <picture>/<img> is the stage photo. It sits in a fixed-aspect
+   box (~2.4:1, matching the live compact stage) that reserves its height up
+   front — so the stage keeps its tall proportion, never collapses, and causes
+   no layout shift even before the image loads. */
 .hero-stage.image .hero-stage-photo {
-  position: absolute;
-  inset: 0;
+  position: relative;
   z-index: 0;
   margin: 0;
   line-height: 0;
+  aspect-ratio: 24 / 10;
+
+  /* RWE brand-blue fallback so the stage has presence before the photo paints */
+  background: linear-gradient(45deg, #1d4477 22%, #00a19f);
 }
 
 .hero-stage.image .hero-stage-photo img {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-/* Single slide: bottom-anchored so the title panel sits lower-left like live. */
+/* The text overlay is layered on top of the photo, filling the stage. */
 .hero-stage.image .hero-stage-slide {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
-  justify-content: flex-end; /* push content column toward the bottom */
-  min-height: inherit;
+  align-items: center; /* vertically center the panel like live */
+  padding: 24px;
+  box-sizing: border-box;
 }
 
-/* Compact solid dark-blue title panel overlaid on the photo (not full-width). */
+/* Content column constrained + centered (1170px), panel left-aligned within. */
 .hero-stage.image .hero-stage-content {
   max-width: var(--content-max-width, 1170px);
   align-items: flex-start;
 }
 
+/* Translucent frosted panel: 70% white, rounded, RWE-blue text (live values). */
 .hero-stage.image .hero-stage-panel {
-  max-width: 460px;
-  padding: 24px 28px;
-  background: var(--brand-blue, #1d4477);
-  color: #fff;
+  max-width: 560px;
+  padding: 24px 32px;
+  border-radius: 6px;
+  background: hsl(0deg 0% 100% / 70%);
+  backdrop-filter: blur(2px);
+  color: var(--brand-blue, #1d4477);
 }
 
 .hero-stage.image .hero-stage-headline {
+  color: var(--brand-blue, #1d4477);
   font-size: var(--heading-font-size-xl, 32px);
   line-height: 1.1;
 }
@@ -305,25 +322,29 @@
 /* Image-hero headline is a single tone (no energy-green lead accent). */
 .hero-stage.image .hero-stage-headline .hero-stage-headline-accent {
   display: inline;
-  color: #fff;
+  color: var(--brand-blue, #1d4477);
 }
 
 .hero-stage.image h3 {
   margin: 8px 0 0;
+  color: var(--brand-blue, #1d4477);
   font-size: var(--body-font-size-s, 16px);
-  font-weight: 400;
+  font-weight: 700;
 }
 
-/* Impact-print watermark: reuse the base ::after; the photo scrim is not
-   needed here since the panel is solid. */
+/* No looping-video media layer in this variant. */
 .hero-stage.image .hero-stage-media { display: none; }
 
 @media (width >= 900px) {
-  .hero-stage.image {
-    min-height: 520px;
+  .hero-stage.image .hero-stage-slide {
+    padding: 40px 48px;
   }
 
-  .hero-stage.image .hero-stage-slide {
-    padding: 40px 48px 56px;
+  .hero-stage.image .hero-stage-headline {
+    font-size: var(--heading-font-size-xxl, 48px);
+  }
+
+  .hero-stage.image h3 {
+    font-size: var(--body-font-size-m, 18px);
   }
 }

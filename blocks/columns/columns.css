@@ -7,6 +7,15 @@
   width: 100%;
 }
 
+/* Logo-strip variant: logos are constrained, not full-width (see .columns.logos
+   layout rules below). Declared here so specificity stays in source order. */
+.columns.logos img {
+  width: auto;
+  max-width: 160px;
+  max-height: 90px;
+  object-fit: contain;
+}
+
 .columns > div > div {
   order: 1;
 }
@@ -30,4 +39,23 @@
     flex: 1;
     order: unset;
   }
+}
+
+/* ============================================================================
+   Variant: columns.logos — award / partner logo strip (RWE lll01 list).
+   Each cell holds one logo; they sit in a centered, wrapping horizontal row
+   with a constrained, uniform height instead of each filling its column.
+   ============================================================================ */
+.columns.logos > div {
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 32px 48px;
+}
+
+.columns.logos > div > div {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
