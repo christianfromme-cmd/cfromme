@@ -436,6 +436,18 @@ var CustomImportScript = (() => {
   function transform(hookName, element, payload) {
     if (hookName === TransformHook.beforeTransform) {
       WebImporter.DOMUtils.remove(element, ["#usercentrics-root"]);
+      WebImporter.DOMUtils.remove(element, [
+        "#target-group-select",
+        // language / target-group switcher nav (las01r)
+        "#off-screen-app-drawer",
+        // search drawer wrapper ("Enter search term")
+        "#search-drawer",
+        '[data-tpl="ses01"]',
+        // search form component (fallback if drawer id absent)
+        '[data-tpl="target-group-select"]',
+        'nav[data-tpl="las01r"]',
+        '[data-link-name="Language-Switch"]'
+      ]);
       WebImporter.DOMUtils.remove(element, [".slick-cloned"]);
       WebImporter.DOMUtils.remove(element, [
         ".slider-prev",
