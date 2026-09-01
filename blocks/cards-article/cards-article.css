@@ -118,3 +118,118 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
 }
+
+/* ============================================================================
+   Variant: cards-article.slider — RWE "Key reasons" sli01 carousel.
+   White cards (RWE-blue text, image on top, no CTA), paginated 3-per-view
+   (2 on tablet, 1 on mobile) with prev/next arrows and page dots. The list
+   becomes a horizontal track that translates by whole pages.
+   ============================================================================ */
+.cards-article.slider .cards-article-viewport {
+  overflow: hidden;
+}
+
+.cards-article.slider > .cards-article-viewport > ul {
+  display: flex;
+  grid-template-columns: none;
+  gap: 0;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Each card takes an equal share of the current per-page view. The gap is
+   applied as inner padding so the translate math stays whole-page. */
+.cards-article.slider > .cards-article-viewport > ul > li {
+  flex: 0 0 calc(100% / var(--cards-per-page, 1));
+  box-sizing: border-box;
+  padding-right: 24px;
+
+  /* White card, no gradient, no hover lift, no impact-print motif. */
+  background-image: none;
+  background-color: #fff;
+  color: var(--brand-blue, #1d4477);
+  transition: none;
+}
+
+.cards-article.slider > .cards-article-viewport > ul > li::after {
+  content: none;
+}
+
+.cards-article.slider > .cards-article-viewport > ul > li:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.cards-article.slider .cards-article-card-body {
+  padding: 16px 0 0;
+}
+
+.cards-article.slider .cards-article-card-body h3 {
+  margin: 0 0 16px;
+  color: var(--brand-blue, #1d4477);
+}
+
+.cards-article.slider .cards-article-card-body p {
+  color: var(--brand-blue, #1d4477);
+}
+
+/* Controls row: prev arrow, dots, next arrow — centred under the track. */
+.cards-article.slider .cards-article-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.cards-article.slider .cards-article-arrow {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--energy-green-dark, #00a19f);
+  cursor: pointer;
+}
+
+.cards-article.slider .cards-article-arrow::before {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin: 0 auto;
+  border-top: 2px solid currentcolor;
+  border-right: 2px solid currentcolor;
+}
+
+.cards-article.slider .cards-article-prev::before {
+  transform: rotate(-135deg);
+}
+
+.cards-article.slider .cards-article-next::before {
+  transform: rotate(45deg);
+}
+
+.cards-article.slider .cards-article-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.cards-article.slider .cards-article-dots {
+  display: flex;
+  gap: 12px;
+}
+
+.cards-article.slider .cards-article-dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 2px solid var(--energy-green-dark, #00a19f);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0;
+}
+
+.cards-article.slider .cards-article-dot.active {
+  background: var(--energy-green-dark, #00a19f);
+}
