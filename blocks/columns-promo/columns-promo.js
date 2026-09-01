@@ -42,10 +42,28 @@ export default function decorate(block) {
       video.playsInline = true;
       video.setAttribute('aria-hidden', 'true');
       video.setAttribute('poster', PROMO_POSTER);
-      const source = document.createElement('source');
-      source.src = href;
-      source.type = href.endsWith('.mp4') ? 'video/mp4' : 'video/webm';
-      video.append(source);
+
+      // Offer both webm + mp4 (matching live) for cross-browser playback. The
+      // authored link is usually the webm; derive its mp4 companion from RWE's
+      // naming convention (…-webm.webm -> ….mp4) when only one is present.
+      const sources = [];
+      if (href.endsWith('.webm')) {
+        sources.push({ src: href, type: 'video/webm' });
+        sources.push({ src: href.replace(/-webm\.webm$/, '.mp4').replace(/\.webm$/, '.mp4'), type: 'video/mp4' });
+      } else if (href.endsWith('.mp4')) {
+        sources.push({ src: href, type: 'video/mp4' });
+      } else {
+        sources.push({ src: href, type: 'video/mp4' });
+      }
+      const seen = new Set();
+      sources.forEach(({ src, type }) => {
+        if (seen.has(src)) return;
+        seen.add(src);
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = type;
+        video.append(source);
+      });
 
       // replace the placeholder <p><a></a></p> markup with the fallback + video
       cell.textContent = '';

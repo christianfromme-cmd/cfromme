@@ -16,25 +16,25 @@
   padding: 0 !important;
 }
 
-/* The single decorated row is the promo canvas — a two-cell grid.
-   Mobile: media stacked over body. Desktop: media | body side by side. */
+/* The single decorated row is the promo canvas: a full-bleed looping video
+   background with a teal->green gradient overlay, and the text content
+   overlaid on the right — matching the live RWE tea01r video-container. */
 .columns-promo > div {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
-/* Media cell (video/picture) — in-flow so the grid cannot collapse. */
-.columns-promo-media {
   position: relative;
-  width: 100%;
   overflow: hidden;
 
-  /* Banner proportion on mobile so the media area reads as intentional. */
-  aspect-ratio: 16 / 9;
-
-  /* Branded fallback shown until the video paints / if media is unavailable. */
+  /* Banner proportion; live uses ~41.67vw capped at 600px. */
+  min-height: 280px;
   background-color: var(--brand-blue);
   background-image: var(--energy-gradient);
+}
+
+/* Media cell (video/picture) fills the whole canvas behind everything. */
+.columns-promo-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
 }
 
 .columns-promo-media .columns-promo-video,
@@ -58,41 +58,30 @@
   z-index: 1;
 }
 
-/* Text panel — translucent RWE blue -> petrol gradient so the video behind it
-   remains visible (matches the live tea01r "affordance" panel over media). */
+/* Teal->green gradient overlay across the whole video: lighter on the left so
+   the footage shows through, denser on the right for text contrast (live
+   .video-container:before values). */
+.columns-promo > div::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgb(29 68 119 / 26%), rgb(15 114 139 / 90%) 78%, rgb(0 161 159 / 90%));
+  pointer-events: none;
+}
+
+/* Text content — overlaid (transparent), the gradient overlay provides colour;
+   mobile it sits over the full-width video, desktop it aligns to the right. */
 .columns-promo-body {
   position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  min-height: inherit;
   padding: 24px;
-  background-image: linear-gradient(45deg, rgb(29 68 119 / 82%) 22%, rgb(0 161 159 / 78%));
   color: #fff;
-  overflow: hidden;
-}
-
-/* RWE "impact print" fingerprint-arc motif, bottom-right of the gradient panel
-   (decorative; matches source .impact-print-image on tea01r gradient teasers). */
-.columns-promo-body::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  width: 220px;
-  height: 220px;
-  max-width: 55%;
-  background: url('https://www.rwe.com/-/media/RWE/Impact-Print/Impact-Print-Dark-Green-and-White.svg') no-repeat right bottom;
-  background-size: contain;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-/* Keep the panel's text/CTA above the motif. */
-.columns-promo-body > * {
-  position: relative;
-  z-index: 1;
 }
 
 .columns-promo-body h3 {
@@ -135,24 +124,34 @@
 }
 
 @media (width >= 900px) {
-  /* Media (left, wider) | text panel (right). In-flow grid cells keep both
-     visible and correctly sized — no absolute positioning to collapse. */
+  /* Live proportion: ~41.67vw tall, capped at 600px. */
   .columns-promo > div {
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 40%);
-    min-height: 600px;
+    min-height: min(41.67vw, 600px);
   }
 
-  .columns-promo-media {
-    aspect-ratio: auto;
-    height: 100%;
-  }
-
+  /* Text sits on the right half, aligned to the centered 1170px column. */
   .columns-promo-body {
-    padding: 48px 40px;
+    align-items: flex-end;
+    padding: 48px 0;
   }
 
-  /* Keep the text panel content aligned to the centered 1170px column edge. */
   .columns-promo-body > * {
-    max-width: 420px;
+    width: 100%;
+    max-width: var(--content-max-width, 1170px);
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  /* Constrain the text to the right ~40% within that centered column. */
+  .columns-promo-body h3,
+  .columns-promo-body p,
+  .columns-promo-body a:any-link {
+    margin-left: auto;
+  }
+
+  .columns-promo-body h3,
+  .columns-promo-body p {
+    max-width: 42%;
   }
 }
