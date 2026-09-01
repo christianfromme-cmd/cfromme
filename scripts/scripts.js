@@ -100,6 +100,30 @@ function buildAnchorNavAutoBlocks(main) {
 }
 
 /**
+ * Prepends an auto-generated `breadcrumb` block to the page — the RWE top
+ * breadcrumb trail (e.g. "RWE › RWE Careers › Why work here"). Derived from the
+ * URL path rather than authored per-page, mirroring the source site's global
+ * breadcrumb chrome (which the importer strips as non-authorable). Skipped on
+ * the home page and on library-preview pages.
+ * @param {Element} main The container element
+ */
+function buildBreadcrumbAutoBlock(main) {
+  const path = window.location.pathname;
+  if (path === '/' || path.includes('/library/blocks/')) return;
+  // Only the page's own <main> gets a breadcrumb — not header/footer fragments
+  // (which are also decorated via decorateMain).
+  if (main !== document.querySelector('main')) return;
+  if (main.querySelector('.breadcrumb')) return; // already present
+  // The block must live inside a section <div> so decorateSections keeps it a
+  // block; inserting it as a bare child of <main> would turn it into a section.
+  const section = document.createElement('div');
+  section.append(buildBlock('breadcrumb', [['']]));
+  const firstSection = main.querySelector(':scope > div');
+  if (firstSection) firstSection.after(section);
+  else main.prepend(section);
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -123,6 +147,7 @@ function buildAutoBlocks(main) {
       });
     }
     buildWidgetAutoBlocks(main);
+    buildBreadcrumbAutoBlock(main);
     buildAnchorNavAutoBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console

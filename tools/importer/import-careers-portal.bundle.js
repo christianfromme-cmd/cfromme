@@ -75,9 +75,13 @@ var CustomImportScript = (() => {
       const styleText = Array.from(element.querySelectorAll("style")).map((s) => s.textContent).join("\n");
       const urls = [...styleText.matchAll(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/g)].map((m) => m[1]);
       if (urls.length) {
-        bg = document2.createElement("img");
-        bg.src = urls[urls.length - 1];
-        bg.alt = "";
+        const widthOf = (u) => {
+          const m = u.match(/[?&]mw=(\d+)/);
+          return m ? parseInt(m[1], 10) : 0;
+        };
+        const best = urls.reduce((a, b) => widthOf(b) >= widthOf(a) ? b : a);
+        bg = document2.createElement("div");
+        bg.setAttribute("style", `background-image: url('${best}')`);
       }
     }
     const textCell = [];
@@ -392,52 +396,41 @@ var CustomImportScript = (() => {
 
   // tools/importer/transformers/rwe-sections.js
   var SECTION_MARKER_ATTR = "data-excat-section-id";
-  var SECTIONS = [
-    { id: "hero", selector: '[data-region="hero"] > section', style: null },
-    { id: "rc2", selector: "main > section:nth-of-type(1)", style: null },
-    { id: "rc3", selector: "main > section:nth-of-type(2)", style: "tinted" },
-    { id: "rc4", selector: "main > section:nth-of-type(3)", style: null },
-    { id: "rc5", selector: "main > section:nth-of-type(4)", style: "tinted" },
-    { id: "rc-quote", selector: "main > section:nth-of-type(5)", style: null },
-    { id: "rc6", selector: "main > section:nth-of-type(6)", style: "tinted" },
-    { id: "rc7", selector: "main > section:nth-of-type(7)", style: null },
-    { id: "rc8", selector: "main > section:nth-of-type(8)", style: null },
-    { id: "rc9", selector: "main > section:nth-of-type(9)", style: "tinted" },
-    { id: "rc10", selector: "main > section:nth-of-type(10)", style: null },
-    { id: "rc11", selector: "main > section:nth-of-type(11)", style: null },
-    { id: "rc-faqcta", selector: "main > section:nth-of-type(12)", style: null },
-    { id: "rc13", selector: "main > section:nth-of-type(13)", style: "tinted" }
-  ];
+  var TINTED_MARKER_ATTR = "data-excat-section-tinted";
+  var TINTED_CLASS = "color-background-2";
+  function collectSections(element) {
+    const hero = element.querySelector('[data-region="hero"] > section');
+    const mainSections = [...element.querySelectorAll("main > section")];
+    const list = [];
+    if (hero) list.push({ el: hero, isHero: true });
+    mainSections.forEach((el) => list.push({ el, isHero: false }));
+    return list;
+  }
   function transform2(hookName, element, payload) {
-    const sections = payload && payload.template && payload.template.sections && payload.template.sections.length > 1 ? payload.template.sections : SECTIONS;
+    const templateSections = payload && payload.template && payload.template.sections && payload.template.sections.length > 1 ? payload.template.sections : null;
     if (hookName === "beforeTransform") {
+      const sections = templateSections ? templateSections.map((s) => ({ el: element.querySelector(s.selector), isHero: s.id === "hero" })) : collectSections(element);
       for (let i = sections.length - 1; i >= 0; i -= 1) {
-        const section = sections[i];
-        if (i === 0 && !section.style) continue;
-        const sectionEl = element.querySelector(section.selector);
-        if (!sectionEl) continue;
+        const { el } = sections[i];
+        if (!el) continue;
+        const tinted = el.classList.contains(TINTED_CLASS);
+        if (i === 0 && !tinted) continue;
         const hr = document.createElement("hr");
-        if (section.style) hr.setAttribute(SECTION_MARKER_ATTR, section.id);
-        sectionEl.before(hr);
+        hr.setAttribute(SECTION_MARKER_ATTR, `s${i}`);
+        if (tinted) hr.setAttribute(TINTED_MARKER_ATTR, "true");
+        el.before(hr);
       }
     }
     if (hookName === "afterTransform") {
-      for (let i = sections.length - 1; i >= 0; i -= 1) {
-        const section = sections[i];
-        if (!section.style) continue;
-        const marker = element.querySelector(`[${SECTION_MARKER_ATTR}="${section.id}"]`);
-        const anchor = marker || element.querySelector(section.selector);
-        if (!anchor) continue;
+      const markers = [...element.querySelectorAll(`[${TINTED_MARKER_ATTR}="true"]`)];
+      markers.forEach((marker) => {
         const metadataBlock = WebImporter.Blocks.createBlock(document, {
           name: "Section Metadata",
-          cells: { style: section.style }
+          cells: { style: "tinted" }
         });
-        anchor.after(metadataBlock);
-        if (marker) {
-          marker.removeAttribute(SECTION_MARKER_ATTR);
-          if (i === 0) marker.remove();
-        }
-      }
+        marker.after(metadataBlock);
+        marker.removeAttribute(TINTED_MARKER_ATTR);
+      });
     }
   }
 

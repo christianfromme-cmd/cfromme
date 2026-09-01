@@ -1,0 +1,51 @@
+/*
+ * breadcrumb — RWE top breadcrumb trail.
+ * Teal links separated by a "›" chevron, current page in bold brand-blue.
+ * Matches the live careers breadcrumb (RWE › RWE Careers › Why work here).
+ */
+
+.breadcrumb.block {
+  max-width: var(--content-max-width, 1170px);
+  margin: 16px auto 0;
+  padding: 0 24px;
+}
+
+.breadcrumb .breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--body-font-size-s, 15px);
+  font-weight: 700;
+}
+
+.breadcrumb .breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Chevron separator before every crumb except the first. */
+.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  content: "\203A"; /* › */
+  margin: 0 10px;
+  color: var(--link-color, #00a19f);
+  font-weight: 700;
+}
+
+.breadcrumb .breadcrumb-item a {
+  color: var(--link-color, #00a19f);
+  text-decoration: none;
+}
+
+.breadcrumb .breadcrumb-item a:hover,
+.breadcrumb .breadcrumb-item a:focus-visible {
+  color: var(--link-hover-color, #1d4477);
+  text-decoration: underline;
+}
+
+/* Current page: not a link, brand blue. */
+.breadcrumb .breadcrumb-item[aria-current="page"] {
+  color: var(--brand-blue, #1d4477);
+}

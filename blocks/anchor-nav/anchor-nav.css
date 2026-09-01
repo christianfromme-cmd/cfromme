@@ -1,48 +1,47 @@
 /*
- * anchor-nav — RWE quick-jump button grid.
- * Solid teal buttons, white bold centered labels, arranged in a responsive
- * grid (1 col mobile → 2 → 3 desktop), matching the live "What we offer"
- * on-page navigation.
+ * anchor-nav — RWE quick-jump buttons (live cta01 / btn--full-width).
+ * Compact solid-teal buttons with white bold labels, sized to their content
+ * and centered in a single wrapping row — matching the live careers on-page
+ * navigation. On mobile they stack full-width for tap-friendliness.
  */
 
 .anchor-nav .anchor-nav-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
   max-width: var(--content-max-width, 1170px);
   margin: 0 auto;
 }
 
 .anchor-nav .anchor-nav-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 56px;
-  padding: 12px 20px;
+  padding: 8px 24px;
+  border: 2px solid var(--energy-green-dark, #00a19f);
+  border-radius: 5px;
   background-color: var(--energy-green-dark, #00a19f);
   color: #fff;
-  font-size: var(--body-font-size-m, 18px);
+  font-size: var(--body-font-size-s, 15px);
   font-weight: 700;
   line-height: 1.25;
   text-align: center;
   text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .anchor-nav .anchor-nav-item:hover,
 .anchor-nav .anchor-nav-item:focus-visible {
+  border-color: var(--brand-blue, #1d4477);
   background-color: var(--brand-blue, #1d4477);
   color: #fff;
   text-decoration: none;
 }
 
-@media (width >= 600px) {
+/* Mobile: stack full-width so the labels stay tappable. */
+@media (width < 600px) {
   .anchor-nav .anchor-nav-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (width >= 900px) {
-  .anchor-nav .anchor-nav-list {
-    grid-template-columns: repeat(3, 1fr);
+    flex-direction: column;
   }
 }
