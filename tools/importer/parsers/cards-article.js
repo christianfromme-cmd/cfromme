@@ -2,34 +2,78 @@
 /* global WebImporter */
 /**
  * Parser for cards-article. Base block: cards.
- * Source: https://www.rwe.com/en/rwe-careers-portal/ (card grids)
- * Generated: 2026-08-19
+ * Source: https://www.rwe.com/en/rwe-careers-portal/ (card grids) and the
+ * "Discover more about us" / "Driving ideas" teaser rows + the standalone
+ * "Insights from #TeamRWE" teaser on the why-work-here content-page archetype.
+ * Generated: 2026-08-19, updated 2026-09-01
  *
  * Repeating promo/opportunity cards. Each card is an <article class="tea01--image-left">
  * wrapped in a single <a href> (the whole card is linked). Content: optional photo,
  * an H3 title, a paragraph and a CTA whose visible label sits in a `.btn span`
- * (not a real anchor). The source photos are CSS-background <div>s (no <img>), so
- * these cards are effectively image-less -> 1-column "cards (no images)" layout.
- * Each row holds one card cell: [image?, heading, paragraph, cta-link].
- * If a real <img> photo exists on a card it becomes a 2-column row
- * ([image, textCell]); otherwise a 1-column row ([textCell]).
+ * (not a real anchor).
+ *
+ * IMAGE HANDLING (archetype-general): RWE tea01r teasers deliver their photo as a
+ * CSS `background-image` inside an inline responsive <style> block (media-query
+ * variants) — there is NO <img>. Rather than hot-linking an absolute src (which
+ * skips the image pipeline), we extract the highest-resolution variant and emit a
+ * placeholder <div> carrying an inline `background-image: url('...')` style. The
+ * built-in WebImporter.rules.transformBackgroundImages rule (run after parsing)
+ * converts it into a real <picture><img>, and adjustImageUrls localizes it —
+ * exactly like tools/importer/parsers/hero-stage-image.js. Cards that ship a real
+ * <img>/<picture> keep it as-is. If ANY card has an image the whole grid uses
+ * 2-column rows [image, textCell] to keep column counts consistent.
  */
+
+/**
+ * Extract the highest-resolution background-image URL from a card's inline
+ * responsive <style> block and emit a <div> carrying it as an inline style so
+ * transformBackgroundImages can turn it into a real image.
+ */
+function bgImageEl(card, document) {
+  const styleText = Array.from(card.querySelectorAll('style'))
+    .map((s) => s.textContent)
+    .join('\n');
+  const urls = [...styleText.matchAll(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/g)]
+    .map((m) => m[1]);
+  if (!urls.length) return null;
+  const widthOf = (u) => {
+    const m = u.match(/[?&]mw=(\d+)/);
+    return m ? parseInt(m[1], 10) : 0;
+  };
+  const best = urls.reduce((a, b) => (widthOf(b) >= widthOf(a) ? b : a));
+  const div = document.createElement('div');
+  // Exact `background-image: url(` spacing so transformBackgroundImages matches.
+  div.setAttribute('style', `background-image: url('${best}')`);
+  return div;
+}
+
 export default function parse(element, { document }) {
-  const cards = Array.from(element.querySelectorAll('article.tea01--image-left'));
+  // Two card shapes across the archetype:
+  //  - <article class="tea01--image-left"> teasers (Discover more / Driving ideas /
+  //    Insights) whose photo is a CSS background-image, and
+  //  - <div data-tpl="tic01" class="rwe-tick01"> "Key reasons" cards (inside the
+  //    sli01 slider) which carry a real <figure><picture><img>.
+  const cards = Array.from(
+    element.querySelectorAll('article.tea01--image-left, div.rwe-tick01:has(figure)'),
+  );
   if (!cards.length) {
     element.replaceWith(...element.childNodes);
     return;
   }
 
-  // Detect whether ANY card has a real content image (ignore decorative
-  // impact-print svg). Keep column count consistent across all rows.
-  const hasImages = cards.some((card) => !!card.querySelector(
-    'img:not(.impact-print-image):not(.impact-print-image__wrapper img)',
-  ));
+  // Resolve each card's image up-front: a real content <img> (ignore the
+  // decorative impact-print svg) or, failing that, the extracted background-image.
+  const images = cards.map((card) => {
+    const real = card.querySelector(
+      'img:not(.impact-print-image):not(.impact-print-image__wrapper img)',
+    );
+    return real || bgImageEl(card, document);
+  });
+  const hasImages = images.some(Boolean);
 
   const cells = [];
 
-  cards.forEach((card) => {
+  cards.forEach((card, i) => {
     const textCell = [];
 
     const heading = card.querySelector('h3, .headline');
@@ -50,8 +94,7 @@ export default function parse(element, { document }) {
     }
 
     if (hasImages) {
-      const img = card.querySelector('img:not(.impact-print-image)');
-      cells.push([img || '', textCell]);
+      cells.push([images[i] || '', textCell]);
     } else {
       cells.push([textCell]);
     }

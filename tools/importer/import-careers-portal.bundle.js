@@ -128,17 +128,36 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/cards-article.js
+  function bgImageEl(card, document2) {
+    const styleText = Array.from(card.querySelectorAll("style")).map((s) => s.textContent).join("\n");
+    const urls = [...styleText.matchAll(/background-image:\s*url\(['"]?([^'")]+)['"]?\)/g)].map((m) => m[1]);
+    if (!urls.length) return null;
+    const widthOf = (u) => {
+      const m = u.match(/[?&]mw=(\d+)/);
+      return m ? parseInt(m[1], 10) : 0;
+    };
+    const best = urls.reduce((a, b) => widthOf(b) >= widthOf(a) ? b : a);
+    const div = document2.createElement("div");
+    div.setAttribute("style", `background-image: url('${best}')`);
+    return div;
+  }
   function parse4(element, { document: document2 }) {
-    const cards = Array.from(element.querySelectorAll("article.tea01--image-left"));
+    const cards = Array.from(
+      element.querySelectorAll("article.tea01--image-left, div.rwe-tick01:has(figure)")
+    );
     if (!cards.length) {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const hasImages = cards.some((card) => !!card.querySelector(
-      "img:not(.impact-print-image):not(.impact-print-image__wrapper img)"
-    ));
+    const images = cards.map((card) => {
+      const real = card.querySelector(
+        "img:not(.impact-print-image):not(.impact-print-image__wrapper img)"
+      );
+      return real || bgImageEl(card, document2);
+    });
+    const hasImages = images.some(Boolean);
     const cells = [];
-    cards.forEach((card) => {
+    cards.forEach((card, i) => {
       const textCell = [];
       const heading = card.querySelector("h3, .headline");
       if (heading) textCell.push(heading);
@@ -153,8 +172,7 @@ var CustomImportScript = (() => {
         if (cta.textContent) textCell.push(cta);
       }
       if (hasImages) {
-        const img = card.querySelector("img:not(.impact-print-image)");
-        cells.push([img || "", textCell]);
+        cells.push([images[i] || "", textCell]);
       } else {
         cells.push([textCell]);
       }
@@ -194,8 +212,58 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/columns-pullquote.js
+  // tools/importer/parsers/columns-video.js
   function parse6(element, { document: document2 }) {
+    const heading = element.querySelector("h1, h2, h3");
+    const paras = Array.from(element.querySelectorAll(".content p"));
+    const videoEl = element.querySelector("video");
+    if (!heading && !videoEl) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const mediaCell = [];
+    if (videoEl) {
+      const poster = videoEl.getAttribute("poster");
+      if (poster) {
+        const posterDiv = document2.createElement("div");
+        posterDiv.setAttribute("style", `background-image: url('${poster}')`);
+        mediaCell.push(posterDiv);
+      }
+      const source = videoEl.querySelector("source[src], source[data-src]");
+      const src = source ? source.getAttribute("src") || source.getAttribute("data-src") : videoEl.getAttribute("data-url");
+      if (src) {
+        const link = document2.createElement("a");
+        link.setAttribute("href", src);
+        link.textContent = "Watch video";
+        mediaCell.push(link);
+      }
+    }
+    paras.forEach((p) => element.before(p));
+    const headingCell = heading ? [heading] : [""];
+    const cells = mediaCell.length ? [[headingCell, mediaCell]] : [[headingCell]];
+    const block = WebImporter.Blocks.createBlock(document2, { name: "columns-about", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/awards-logos.js
+  function parse7(element, { document: document2 }) {
+    const heading = element.querySelector("h1, h2, h3, .headline");
+    const imgs = Array.from(element.querySelectorAll("ul.logos li img, ul li img"));
+    if (!imgs.length) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    if (heading) element.before(heading);
+    const row = imgs.map((img) => [img]);
+    const block = WebImporter.Blocks.createBlock(document2, {
+      name: "columns (logos)",
+      cells: [row]
+    });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/columns-pullquote.js
+  function parse8(element, { document: document2 }) {
     const portrait = element.querySelector(".round-image__image img, img");
     const name = element.querySelector(".round-image__image-title, .round-image__image-title strong");
     const role = element.querySelector(".round-image__image-subtitle");
@@ -222,7 +290,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/columns-promo.js
-  function parse7(element, { document: document2 }) {
+  function parse9(element, { document: document2 }) {
     const article = element.querySelector("article.tea01--image-left") || element;
     const media = article.querySelector("video, .media-container");
     const heading = article.querySelector("h3, .headline");
@@ -250,7 +318,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/columns-note.js
-  function parse8(element, { document: document2 }) {
+  function parse10(element, { document: document2 }) {
     const content = element.querySelector(".content");
     const noteCell = [];
     if (content) {
@@ -268,7 +336,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/gallery.js
-  function parse9(element, { document: document2 }) {
+  function parse11(element, { document: document2 }) {
     const entries = Array.from(element.querySelectorAll(".hotspot__entry"));
     if (!entries.length) {
       element.replaceWith(...element.childNodes);
@@ -295,7 +363,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/carousel-reviews.js
-  function parse10(element, { document: document2 }) {
+  function parse12(element, { document: document2 }) {
     let slides = Array.from(element.querySelectorAll(".slider-slide:not(.slick-cloned)"));
     if (!slides.length) slides = Array.from(element.querySelectorAll(".slider-slide"));
     const cells = [];
@@ -315,7 +383,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/embed-social.js
-  function parse11(element, { document: document2 }) {
+  function parse13(element, { document: document2 }) {
     const contentCell = [];
     const heading = element.querySelector("h2, .headline");
     if (heading) contentCell.push(heading);
@@ -335,7 +403,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/faq-list.js
-  function parse12(element, { document: document2 }) {
+  function parse14(element, { document: document2 }) {
     const items = Array.from(element.querySelectorAll(".accordion-item"));
     if (!items.length) {
       element.replaceWith(...element.childNodes);
@@ -390,6 +458,10 @@ var CustomImportScript = (() => {
         "#TextSnippetShare",
         "#BackToTop"
       ]);
+      WebImporter.DOMUtils.remove(element, [
+        'img[src*="accountinsight"]',
+        'img[src*="/track/"]'
+      ]);
       WebImporter.DOMUtils.remove(element, ["script", "style", "noscript"]);
     }
   }
@@ -441,13 +513,15 @@ var CustomImportScript = (() => {
     ticker: parse3,
     "cards-article": parse4,
     "columns-about": parse5,
-    "columns-pullquote": parse6,
-    "columns-promo": parse7,
-    "columns-note": parse8,
-    gallery: parse9,
-    "carousel-reviews": parse10,
-    "embed-social": parse11,
-    "faq-list": parse12
+    "columns-video": parse6,
+    "awards-logos": parse7,
+    "columns-pullquote": parse8,
+    "columns-promo": parse9,
+    "columns-note": parse10,
+    gallery: parse11,
+    "carousel-reviews": parse12,
+    "embed-social": parse13,
+    "faq-list": parse14
   };
   var transformers = [
     transform,
@@ -475,12 +549,37 @@ var CustomImportScript = (() => {
       {
         name: "cards-article",
         instances: [
-          '#off-screen-content > div > main div.row:has(> div[class*="col-md"] article.tea01--image-left)'
+          // Discover more / Driving ideas teaser rows (image-left tea01r, bg-image photos).
+          '#off-screen-content > div > main div.row:has(> div[class*="col-md"] article.tea01--image-left)',
+          // "Key reasons to work with RWE" cards: the sli01 slider wraps 6 tic01
+          // cards, each with a real <figure><picture>. Content-page archetype only
+          // (data-tpl present) — leaves the landing carousel untouched.
+          '#off-screen-content > div > main [data-tpl="sli01"]:has(.rwe-tick01 figure)',
+          // Standalone "Insights from #TeamRWE" teaser (single full-width tea01r,
+          // bg-image photo) — rendered as a one-card grid.
+          '#off-screen-content > div > main div.grid-content.col-sm-12:has(> article[data-tpl="tea01r"])'
         ]
       },
       {
         name: "columns-about",
-        instances: ["#off-screen-content > div > main .rwe-tick01:has(figure)"]
+        // Landing page: the "keep the world moving" text+video pair (the scraped
+        // landing DOM has data-tpl stripped, so these wrappers carry no data-tpl).
+        // The `:not([data-tpl])` guard keeps this landing-specific match while
+        // preventing it from swallowing the why-work-here "Key reasons" tic01 cards
+        // (data-tpl="tic01") and the Shaping video card (inside data-tpl grid-bas-03),
+        // which are handled by cards-article / columns-video on the content-page archetype.
+        instances: ["#off-screen-content > div > main .rwe-tick01:has(figure):not([data-tpl])"]
+      },
+      {
+        name: "columns-video",
+        // "Shaping the energy future together": two-tone heading + intro paras +
+        // an inline video player. Content-page archetype (data-tpl grid-bas-03).
+        instances: ['#off-screen-content > div > main section[data-tpl="grid-bas-03"]:has(video)']
+      },
+      {
+        name: "awards-logos",
+        // "Our awards": lll01 logo list. Content-page archetype (data-tpl lll01).
+        instances: ['#off-screen-content > div > main section[data-tpl="lll01"]']
       },
       {
         name: "columns-pullquote",

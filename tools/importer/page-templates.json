@@ -33,13 +33,27 @@
         {
           "name": "cards-article",
           "instances": [
-            "#off-screen-content > div > main div.row:has(> div[class*=\"col-md\"] article.tea01--image-left)"
+            "#off-screen-content > div > main div.row:has(> div[class*=\"col-md\"] article.tea01--image-left)",
+            "#off-screen-content > div > main [data-tpl=\"sli01\"]:has(.rwe-tick01 figure)",
+            "#off-screen-content > div > main div.grid-content.col-sm-12:has(> article[data-tpl=\"tea01r\"])"
           ]
         },
         {
           "name": "columns-about",
           "instances": [
-            "#off-screen-content > div > main .rwe-tick01:has(figure)"
+            "#off-screen-content > div > main .rwe-tick01:has(figure):not([data-tpl])"
+          ]
+        },
+        {
+          "name": "columns-video",
+          "instances": [
+            "#off-screen-content > div > main section[data-tpl=\"grid-bas-03\"]:has(video)"
+          ]
+        },
+        {
+          "name": "awards-logos",
+          "instances": [
+            "#off-screen-content > div > main section[data-tpl=\"lll01\"]"
           ]
         },
         {

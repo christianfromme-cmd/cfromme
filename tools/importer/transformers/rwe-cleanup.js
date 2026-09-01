@@ -58,6 +58,13 @@ export default function transform(hookName, element, payload) {
       '#BackToTop',
     ]);
 
+    // Third-party tracking pixels (e.g. accountinsight.cloud) leak in as empty
+    // <img>s — non-authorable, drop them.
+    WebImporter.DOMUtils.remove(element, [
+      'img[src*="accountinsight"]',
+      'img[src*="/track/"]',
+    ]);
+
     // Safe technical element removal.
     WebImporter.DOMUtils.remove(element, ['script', 'style', 'noscript']);
   }

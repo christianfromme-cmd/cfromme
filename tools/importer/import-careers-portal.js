@@ -7,6 +7,8 @@ import heroStageImageParser from './parsers/hero-stage-image.js';
 import tickerParser from './parsers/ticker.js';
 import cardsArticleParser from './parsers/cards-article.js';
 import columnsAboutParser from './parsers/columns-about.js';
+import columnsVideoParser from './parsers/columns-video.js';
+import awardsLogosParser from './parsers/awards-logos.js';
 import columnsPullquoteParser from './parsers/columns-pullquote.js';
 import columnsPromoParser from './parsers/columns-promo.js';
 import columnsNoteParser from './parsers/columns-note.js';
@@ -26,6 +28,8 @@ const parsers = {
   ticker: tickerParser,
   'cards-article': cardsArticleParser,
   'columns-about': columnsAboutParser,
+  'columns-video': columnsVideoParser,
+  'awards-logos': awardsLogosParser,
   'columns-pullquote': columnsPullquoteParser,
   'columns-promo': columnsPromoParser,
   'columns-note': columnsNoteParser,
@@ -64,12 +68,37 @@ const PAGE_TEMPLATE = {
     {
       name: 'cards-article',
       instances: [
+        // Discover more / Driving ideas teaser rows (image-left tea01r, bg-image photos).
         '#off-screen-content > div > main div.row:has(> div[class*="col-md"] article.tea01--image-left)',
+        // "Key reasons to work with RWE" cards: the sli01 slider wraps 6 tic01
+        // cards, each with a real <figure><picture>. Content-page archetype only
+        // (data-tpl present) — leaves the landing carousel untouched.
+        '#off-screen-content > div > main [data-tpl="sli01"]:has(.rwe-tick01 figure)',
+        // Standalone "Insights from #TeamRWE" teaser (single full-width tea01r,
+        // bg-image photo) — rendered as a one-card grid.
+        '#off-screen-content > div > main div.grid-content.col-sm-12:has(> article[data-tpl="tea01r"])',
       ],
     },
     {
       name: 'columns-about',
-      instances: ['#off-screen-content > div > main .rwe-tick01:has(figure)'],
+      // Landing page: the "keep the world moving" text+video pair (the scraped
+      // landing DOM has data-tpl stripped, so these wrappers carry no data-tpl).
+      // The `:not([data-tpl])` guard keeps this landing-specific match while
+      // preventing it from swallowing the why-work-here "Key reasons" tic01 cards
+      // (data-tpl="tic01") and the Shaping video card (inside data-tpl grid-bas-03),
+      // which are handled by cards-article / columns-video on the content-page archetype.
+      instances: ['#off-screen-content > div > main .rwe-tick01:has(figure):not([data-tpl])'],
+    },
+    {
+      name: 'columns-video',
+      // "Shaping the energy future together": two-tone heading + intro paras +
+      // an inline video player. Content-page archetype (data-tpl grid-bas-03).
+      instances: ['#off-screen-content > div > main section[data-tpl="grid-bas-03"]:has(video)'],
+    },
+    {
+      name: 'awards-logos',
+      // "Our awards": lll01 logo list. Content-page archetype (data-tpl lll01).
+      instances: ['#off-screen-content > div > main section[data-tpl="lll01"]'],
     },
     {
       name: 'columns-pullquote',
