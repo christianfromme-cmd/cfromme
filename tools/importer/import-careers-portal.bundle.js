@@ -149,6 +149,7 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
+    const isSlider = !!element.closest('[data-tpl="sli01"]') || !!element.querySelector('[data-tpl="sli01"]') || cards.every((c) => c.matches("div.rwe-tick01"));
     const images = cards.map((card) => {
       const real = card.querySelector(
         "img:not(.impact-print-image):not(.impact-print-image__wrapper img)"
@@ -163,13 +164,15 @@ var CustomImportScript = (() => {
       if (heading) textCell.push(heading);
       const desc = card.querySelector(".content p, header > p, p:not(.image-caption)");
       if (desc) textCell.push(desc);
-      const anchor = card.querySelector("a[href]");
-      const label = card.querySelector(".btn span, .btn");
-      if (anchor && anchor.getAttribute("href")) {
-        const cta = document2.createElement("a");
-        cta.setAttribute("href", anchor.getAttribute("href"));
-        cta.textContent = (label ? label.textContent : anchor.textContent).trim();
-        if (cta.textContent) textCell.push(cta);
+      if (!isSlider) {
+        const anchor = card.querySelector("a[href]");
+        const label = card.querySelector(".btn span, .btn");
+        if (anchor && anchor.getAttribute("href")) {
+          const cta = document2.createElement("a");
+          cta.setAttribute("href", anchor.getAttribute("href"));
+          cta.textContent = (label ? label.textContent : anchor.textContent).trim();
+          if (cta.textContent) textCell.push(cta);
+        }
       }
       if (hasImages) {
         cells.push([images[i] || "", textCell]);
@@ -177,7 +180,10 @@ var CustomImportScript = (() => {
         cells.push([textCell]);
       }
     });
-    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-article", cells });
+    const block = WebImporter.Blocks.createBlock(document2, {
+      name: isSlider ? "cards-article (slider)" : "cards-article",
+      cells
+    });
     element.replaceWith(block);
   }
 

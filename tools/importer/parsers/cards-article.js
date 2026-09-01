@@ -61,6 +61,15 @@ export default function parse(element, { document }) {
     return;
   }
 
+  // The "Key reasons" cards live inside an sli01 slider and are rwe-tick01
+  // (white card, RWE-blue text, image on top, no CTA button) that the live site
+  // paginates 3-per-view with arrows + dots. Detect that source and emit the
+  // `slider` variant so the block decorates as a carousel; the tea01--image-left
+  // teasers stay the default gradient-panel grid.
+  const isSlider = !!element.closest('[data-tpl="sli01"]')
+    || !!element.querySelector('[data-tpl="sli01"]')
+    || cards.every((c) => c.matches('div.rwe-tick01'));
+
   // Resolve each card's image up-front: a real content <img> (ignore the
   // decorative impact-print svg) or, failing that, the extracted background-image.
   const images = cards.map((card) => {
@@ -83,14 +92,17 @@ export default function parse(element, { document }) {
     if (desc) textCell.push(desc);
 
     // The whole card is linked; build a real CTA link using the card href and
-    // the visible button label.
-    const anchor = card.querySelector('a[href]');
-    const label = card.querySelector('.btn span, .btn');
-    if (anchor && anchor.getAttribute('href')) {
-      const cta = document.createElement('a');
-      cta.setAttribute('href', anchor.getAttribute('href'));
-      cta.textContent = (label ? label.textContent : anchor.textContent).trim();
-      if (cta.textContent) textCell.push(cta);
+    // the visible button label. Slider (rwe-tick01) cards show no CTA button on
+    // the live site, so skip it for them.
+    if (!isSlider) {
+      const anchor = card.querySelector('a[href]');
+      const label = card.querySelector('.btn span, .btn');
+      if (anchor && anchor.getAttribute('href')) {
+        const cta = document.createElement('a');
+        cta.setAttribute('href', anchor.getAttribute('href'));
+        cta.textContent = (label ? label.textContent : anchor.textContent).trim();
+        if (cta.textContent) textCell.push(cta);
+      }
     }
 
     if (hasImages) {
@@ -100,6 +112,9 @@ export default function parse(element, { document }) {
     }
   });
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'cards-article', cells });
+  const block = WebImporter.Blocks.createBlock(document, {
+    name: isSlider ? 'cards-article (slider)' : 'cards-article',
+    cells,
+  });
   element.replaceWith(block);
 }
