@@ -70,6 +70,24 @@
   pointer-events: none;
 }
 
+/* No-media variant (landing "Explore opportunities"): no video, so the panel is
+   a solid brand gradient carrying the decorative RWE impact-print motif
+   bottom-right. The video variant matches live's `no-energy-lines` (no motif). */
+.columns-promo.no-media > div {
+  background-image: var(--energy-gradient-diagonal, linear-gradient(45deg, #1d4477 22%, #00a19f));
+}
+
+.columns-promo.no-media > div::before {
+  z-index: 1;
+  background: url('https://www.rwe.com/-/media/RWE/Impact-Print/Impact-Print-Dark-Green-and-White.svg') no-repeat right bottom;
+  background-size: contain;
+  width: 220px;
+  height: 220px;
+  max-width: 55%;
+  inset: auto 0 0 auto;
+  opacity: 0.4;
+}
+
 /* Text content — overlaid (transparent), the gradient overlay provides colour;
    mobile it sits over the full-width video, desktop it aligns to the right. */
 .columns-promo-body {

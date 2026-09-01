@@ -18,6 +18,15 @@ export default function decorate(block) {
   if (!row) return;
   const cells = [...row.children];
 
+  // Whether any cell carries background media (video or picture). When none does
+  // — the landing "Explore opportunities" variant — the block is a plain
+  // gradient panel and gets the decorative impact-print motif (via the
+  // `no-media` class); the video variant matches live's `no-energy-lines` (none).
+  const hasMedia = cells.some((cell) => cell.querySelector(
+    'a[href*=".webm"], a[href*=".mp4"], a[href*=".ashx"], picture',
+  ));
+  if (!hasMedia) block.classList.add('no-media');
+
   cells.forEach((cell) => {
     // Media cell: a link/anchor pointing at a video, or a picture.
     const videoLink = cell.querySelector('a[href*=".webm"], a[href*=".mp4"], a[href*=".ashx"]');
